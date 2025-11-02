@@ -1,8 +1,8 @@
 query AllAbouts($first: IntType = 100, $skip: IntType = 0) {
-	abouts: allAbouts(first: $first, skip: $skip) {
+	allAbouts(first: $first, skip: $skip) {
 		...AboutFragmentLight
 	}
-	pagination: _allAboutsMeta {
+	_allAboutsMeta {
 		count
 	}
 }
@@ -14,13 +14,13 @@ query About($slug: String!) {
 }
 
 query MainAbout {
-	abouts: allAbouts(first: 1) {
+	allAbouts(first: 1) {
 		...AboutFragment
 	}
 }
 
 query AllAboutsMenu {
-	abouts: allAbouts(first: 100) {
+	allAbouts(first: 100) {
 		title
 		slug
 	}

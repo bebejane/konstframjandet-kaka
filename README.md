@@ -1,3 +1,3 @@
-## KAKA
+## Luleåbiennalen
 
 Website

@@ -7,8 +7,8 @@ fragment ImageThumbnailFragment on FileField {
 	height
 	width
 	responsiveImage(
-		imgixParams: { q: 50, ar: "3:2", fit: crop, auto: format }
-		sizes: "(max-width: 46.24em) 50vw, 25vw"
+		imgixParams: { q: 70, ar: "8:5", fit: crop, auto: format }
+		sizes: "(max-width: 46.24em) 25vw, 50vw"
 	) {
 		src
 		width
@@ -16,5 +16,6 @@ fragment ImageThumbnailFragment on FileField {
 		alt
 		title
 		base64
+		sizes
 	}
 }

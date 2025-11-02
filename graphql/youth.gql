@@ -1,9 +1,9 @@
 query AllYouths($first: IntType = 100, $skip: IntType = 0) {
-	youths: allYouths(first: $first, skip: $skip, orderBy: [_createdAt_DESC]) {
+	allYouths(first: $first, skip: $skip, orderBy: [_createdAt_DESC]) {
 		...YouthFragmentLight
 	}
 
-	pagination: _allYouthsMeta {
+	_allYouthsMeta {
 		count
 	}
 }
@@ -14,10 +14,13 @@ query Youth($slug: String!) {
 	}
 }
 
-query AllYouthsCategories {
-	categories: allYouthCategories(first: 100, orderBy: [title_ASC]) {
+query AllYouthsCategories($first: IntType = 100, $skip: IntType = 0) {
+	allYouthCategories(first: $first, skip: $skip, orderBy: [title_ASC]) {
 		id
 		title
+	}
+	_allYouthCategoriesMeta {
+		count
 	}
 }
 
@@ -118,10 +121,4 @@ fragment YouthFragmentLight on YouthRecord {
 	image {
 		...ImageThumbnailFragment
 	}
-}
-
-fragment SeoMetaTagsFragment on Tag {
-	attributes
-	content
-	tag
 }

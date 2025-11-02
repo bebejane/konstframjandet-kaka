@@ -1,21 +1,21 @@
-import { useState } from 'react'
-import s from './Button.module.scss'
-import cn from 'classnames'
-import { randomInt as rInt } from '/lib/utils'
+'use client';
+import { useState } from 'react';
+import s from './Button.module.scss';
+import cn from 'classnames';
+import { randomInt as rInt } from '@/lib/utils';
 
 export type Props = {
-  children: React.ReactNode
-  className?: string
-}
+	children: React.ReactNode;
+	className?: string;
+};
 
 export default function Button({ className, children }: Props) {
+	const [leftStyle] = useState({ left: '-10px', transform: `skew(${rInt(0, 1) > 0 ? '-' : ''}${rInt(3, 10)}deg)` });
+	const [rightStyle] = useState({ right: '-10px', transform: `skew(${rInt(0, 1) > 0 ? '-' : ''}${rInt(3, 10)}deg)` });
 
-  const [leftStyle] = useState({ left: '-10px', transform: `skew(${rInt(0, 1) > 0 ? '-' : ''}${rInt(3, 10)}deg)` })
-  const [rightStyle] = useState({ right: '-10px', transform: `skew(${rInt(0, 1) > 0 ? '-' : ''}${rInt(3, 10)}deg)` })
-
-  return (
-    <button className={cn(s.button, className)}>
-      <span>{children}</span>
-    </button>
-  )
+	return (
+		<button className={cn(s.button, className)}>
+			<span>{children}</span>
+		</button>
+	);
 }

@@ -1,8 +1,8 @@
-query AllTips {
-	tips: allTips(first: 100) {
+query AllTips($first: IntType = 100, $skip: IntType = 0) {
+	allTips(first: $first, skip: $skip) {
 		...TipFragmentLight
 	}
-	pagination: _allTipsMeta {
+	_allTipsMeta {
 		count
 	}
 }
@@ -13,10 +13,13 @@ query Tip($slug: String!) {
 	}
 }
 
-query AllTipsCategories {
-	categories: allTipCategories(first: 100, orderBy: [title_ASC]) {
+query AllTipsCategories($first: IntType = 100, $skip: IntType = 0) {
+	allTipCategories(first: $first, skip: $skip, orderBy: [title_ASC]) {
 		id
 		title
+	}
+	_allTipCategoriesMeta {
+		count
 	}
 }
 
@@ -72,7 +75,6 @@ fragment TipFragment on TipRecord {
 								slug
 								title
 							}
-
 							... on NewsRecord {
 								id
 								slug
@@ -119,10 +121,4 @@ fragment TipFragmentLight on TipRecord {
 		title
 	}
 	slug
-}
-
-fragment SeoMetaTagsFragment on Tag {
-	attributes
-	content
-	tag
 }

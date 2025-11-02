@@ -2,7 +2,7 @@ import s from './FilterBar.module.scss';
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import useDevice from '/lib/hooks/useDevice';
+import useDevice from '@/lib/hooks/useDevice';
 
 export type FilterOption = {
 	id: string;
@@ -40,8 +40,8 @@ export default function FilterBar({ options = [], onChange, multi = false }: Pro
 								selected?.find(({ id }) => id === opt.id)
 									? selected?.filter(({ id }) => id !== opt.id)
 									: multi
-									? [...selected, opt]
-									: [opt]
+										? [...selected, opt]
+										: [opt]
 							)
 						}
 						className={cn(selected?.find(({ id }) => id === opt.id) && s.selected)}

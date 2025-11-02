@@ -8,7 +8,7 @@ query SiteSearch(
 	$first: IntType = 100
 	$skip: IntType = 0
 ) {
-	abouts: allAbouts(
+	allAbouts(
 		first: $first
 		skip: $skip
 
@@ -20,7 +20,7 @@ query SiteSearch(
 		text: intro(markdown: false)
 		slug
 	}
-	news: allNews(first: $first, skip: $skip, filter: { id: { in: $newsIds } }) {
+	allNews(first: $first, skip: $skip, filter: { id: { in: $newsIds } }) {
 		__typename
 		_modelApiKey
 		title
@@ -28,7 +28,7 @@ query SiteSearch(
 		slug
 	}
 
-	recipes: allRecipes(
+	allRecipes(
 		first: $first
 		skip: $skip
 
@@ -40,14 +40,14 @@ query SiteSearch(
 		text: intro(markdown: false)
 		slug
 	}
-	interviews: allInterviews(first: $first, skip: $skip, filter: { id: { in: $interviewIds } }) {
+	allInterviews(first: $first, skip: $skip, filter: { id: { in: $interviewIds } }) {
 		__typename
 		_modelApiKey
 		title
 		text: intro(markdown: false)
 		slug
 	}
-	youth: allYouths(
+	allYouths(
 		first: $first
 		skip: $skip
 
@@ -59,7 +59,7 @@ query SiteSearch(
 		text: intro(markdown: false)
 		slug
 	}
-	tips: allTips(
+	allTips(
 		first: $first
 		skip: $skip
 

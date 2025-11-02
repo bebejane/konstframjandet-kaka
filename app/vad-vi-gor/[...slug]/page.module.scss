@@ -1,0 +1,26 @@
+.works {
+	margin-top: 2rem;
+
+	div {
+		margin-left: var(--outer-margin);
+		margin-right: var(--outer-margin);
+		@include mq($from: desktop) {
+			margin-left: calc(1.75 * var(--grid-unit));
+			margin-right: calc(1.75 * var(--grid-unit));
+		}
+		border: 1px solid var(--black);
+		p {
+			padding-left: 1.2rem;
+			padding-right: 1rem;
+			margin: 0;
+			padding-bottom: 0;
+			&:first-child {
+				padding-top: 1rem;
+				padding-bottom: 0.5rem;
+			}
+			&:last-child {
+				padding-bottom: 1rem;
+			}
+		}
+	}
+}

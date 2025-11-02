@@ -1,8 +1,8 @@
-query AllRecipes {
-	recipes: allRecipes(first: 100) {
+query AllRecipes($first: IntType = 100, $skip: IntType = 0) {
+	allRecipes(first: $first, skip: $skip) {
 		...RecipeFragmentLight
 	}
-	pagination: _allRecipesMeta {
+	_allRecipesMeta {
 		count
 	}
 }
@@ -13,10 +13,13 @@ query Recipe($slug: String!) {
 	}
 }
 
-query AllRecipeCategories {
-	categories: allRecipeCategories(first: 100, orderBy: [title_ASC]) {
+query AllRecipeCategories($first: IntType = 100, $skip: IntType = 0) {
+	allRecipeCategories(first: $first, skip: $skip, orderBy: [title_ASC]) {
 		id
 		title
+	}
+	_allRecipeCategoriesMeta {
+		count
 	}
 }
 

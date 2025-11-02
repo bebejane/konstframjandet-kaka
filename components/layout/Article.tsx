@@ -1,94 +1,71 @@
-import s from './Article.module.scss'
-import cn from 'classnames'
-import React, { useEffect, useRef, useState } from 'react'
-import { StructuredContent } from "/components";
+import s from './Article.module.scss';
+import cn from 'classnames';
+import StructuredContent from '@/components/content/Content';
 import { Image } from 'react-datocms';
-import { useScrollInfo } from 'dato-nextjs-utils/hooks'
-import { DatoSEO } from 'dato-nextjs-utils/components';
-import Link from 'next/link'
-import useStore from '/lib/store';
-import format from 'date-fns/format';
-import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
-import { DatoMarkdown as Markdown } from 'dato-nextjs-utils/components'
-import useDevice from '/lib/hooks/useDevice';
-import BalanceText from 'react-balance-text'
+import { useScrollInfo } from 'next-dato-utils/hooks';
+import Link from 'next/link';
+import useStore from '@/lib/store';
+import { format } from 'date-fns/format';
+import { Markdown } from 'next-dato-utils/components';
+import useDevice from '@/lib/hooks/useDevice';
+import BalanceText from 'react-wrap-balancer';
+import ArticleImage from '@/components/layout/ArticleImage';
 
 export type ArticleProps = {
-  id: string
-  children?: React.ReactNode | React.ReactNode[] | undefined
-  title?: string
-  subtitle?: string
-  intro?: string
-  image?: FileField
-  imageSize?: 'small' | 'medium' | 'large'
-  content?: any
-  onClick?: (id: string) => void
-  record?: any
-  date?: string
-  tip?: TipRecord[]
-}
+	id: string;
+	children?: React.ReactNode | React.ReactNode[] | undefined;
+	title?: string;
+	subtitle?: string;
+	intro?: string;
+	image?: FileField;
+	imageSize?: 'small' | 'medium' | 'large';
+	content?: any;
+	record?: any;
+	date?: string;
+	tip?: TipRecord[];
+};
 
-export default function Article({ id, children, title, content, image, imageSize, intro, tip, date, onClick, record }: ArticleProps) {
-
-  const [setImageId, setImages] = useStore((state) => [state.setImageId, state.setImages])
-  const captionRef = useRef<HTMLElement | null>(null)
-  const figureRef = useRef<HTMLElement | null>(null)
-
-  useEffect(() => {
-    const images = [image]
-    content?.blocks.forEach(el => {
-      el.__typename === 'ImageRecord' && images.push(el.image)
-      el.__typename === 'ImageGalleryRecord' && images.push.apply(images, el.images)
-    })
-    setImages(images.filter(el => el))
-  }, [])
-
-  return (
-    <>
-      <DatoSEO title={title} />
-      <div className={cn(s.article, 'article')}>
-        <h1><BalanceText>{title}</BalanceText></h1>
-        {image?.responsiveImage &&
-          <figure
-            className={cn(s.mainImage, imageSize && s[imageSize], image.height > image.width && s.portrait)}
-            onClick={() => setImageId(image?.id)}
-            ref={figureRef}
-          >
-            <Image
-              data={image.responsiveImage}
-              pictureClassName={s.picture}
-            />
-            <figcaption ref={captionRef}>
-              {image.title}
-            </figcaption>
-          </figure>
-        }
-        <section className="intro">
-          {date &&
-            <div className={s.date}>
-              <span className="small">{format(new Date(date), 'MMM').replace('.', '')}</span>
-              <span>{format(new Date(date), 'dd').replace('.', '')}</span>
-            </div>
-          }
-          <Markdown className={s.intro}>{intro}</Markdown>
-        </section>
-        {content &&
-          <>
-            <div className="structured">
-              <StructuredContent
-                id={id}
-                record={record}
-                content={content}
-                onClick={(imageId) => setImageId(imageId)}
-                className="structured"
-              />
-            </div>
-          </>
-        }
-        {children}
-
-      </div>
-    </>
-  )
+export default function Article({
+	id,
+	children,
+	title,
+	content,
+	image,
+	imageSize,
+	intro,
+	tip,
+	date,
+	record,
+}: ArticleProps) {
+	return (
+		<>
+			<div className={cn(s.article, 'article')}>
+				<h1>
+					<BalanceText>{title}</BalanceText>
+				</h1>
+				<ArticleImage
+					image={image}
+					content={content}
+					className={cn(imageSize && s[imageSize], image?.height > image?.width && s.portrait)}
+				/>
+				<section className='intro'>
+					{date && (
+						<div className={s.date}>
+							<span className='small'>{format(new Date(date), 'MMM').replace('.', '')}</span>
+							<span>{format(new Date(date), 'dd').replace('.', '')}</span>
+						</div>
+					)}
+					<Markdown className={s.intro} content={intro} />
+				</section>
+				{content && (
+					<>
+						<div className='structured'>
+							<StructuredContent id={id} content={content} className='structured' />
+						</div>
+					</>
+				)}
+				{children}
+			</div>
+		</>
+	);
 }

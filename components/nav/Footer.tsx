@@ -1,33 +1,30 @@
-import s from './Footer.module.scss'
-import cn from 'classnames'
-import type { MenuItem } from '/lib/menu'
-import KFLogo from '/public/images/kf-logo.svg'
-import { usePage } from '/lib/context/page'
-import { PROJECT_NAME } from '/lib/constant'
+import s from './Footer.module.scss';
+import cn from 'classnames';
+import type { MenuItem } from '@/lib/menu';
+//import KFLogo from '@/public/images/kf-logo.svg';
+import { PROJECT_NAME } from '@/lib/constant';
+import Link from 'next/link';
 
 export type FooterProps = {
-	menu: MenuItem[]
-	footer: GeneralRecord
-}
+	menu: MenuItem[];
+	footer: FooterQuery['footer'];
+};
 
-export default function Footer({ footer: { email, facebook, instagram, about } }: FooterProps) {
-	const { isHome } = usePage()
+export default function Footer({ footer }: FooterProps) {
+	if (!footer) return null;
+	const { email, facebook, instagram, about } = footer;
 
 	return (
-		<footer className={cn(s.footer)} id="footer">
+		<footer className={cn(s.footer)} id='footer'>
 			<section>
 				<div>
 					Copyright {PROJECT_NAME}, 2024 <br />
 					<a href={`mailto:${email}`}>{email}</a>
 				</div>
-				<div>
-					Följ oss på <a href={instagram}>Instagram</a>
-				</div>
-				<div>
-					{about}
-				</div>
-				<KFLogo className={s.kf} />
+				<div>Följ oss på {instagram && <Link href={instagram}>Instagram</Link>}</div>
+				<div>{about}</div>
+				{/*<KFLogo className={s.kf} />*/}
 			</section>
 		</footer>
-	)
+	);
 }

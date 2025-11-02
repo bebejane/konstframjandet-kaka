@@ -231,22 +231,8 @@ fragment VideoFragment on VideoFileField {
 	height
 	video {
 		thumbnailUrl
-		streamingUrl
-		mp4high: mp4Url(res: high)
-		mp4med: mp4Url(res: medium)
-		mp4low: mp4Url(res: low)
+		streamingUrl: mp4Url(res: high)
 		framerate
 		duration
 	}
-}
-
-fragment NewsFragmentLight on NewsRecord {
-	id
-	title
-	intro(markdown: false)
-	slug
-	image {
-		...ImageThumbnailFragment
-	}
-	_createdAt
 }
