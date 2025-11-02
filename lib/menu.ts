@@ -3,6 +3,7 @@ import { MenuDocument } from '../graphql';
 
 export type Section = {
 	id: string;
+	header?: string;
 	label: string;
 	slug: string;
 	general?: boolean;
@@ -12,13 +13,13 @@ export type Section = {
 
 export const sections: Section[] = [
 	{ id: 'hem', label: 'Hem', slug: '/', general: true },
-	{ id: 'intervjuer', label: 'KAKA snackar', slug: '/intervjuer' },
-	{ id: 'recept', label: 'Receptboken', slug: '/recept' },
-	{ id: 'tips', label: 'KAKA spanar', slug: '/tips', general: false },
-	{ id: 'unga', label: 'Ungt inflytande', slug: '/unga', general: false },
-	{ id: 'om', label: 'Om oss', slug: '/om', virtual: true, sub: [] },
-	{ id: 'kontakt', label: 'Kontakt', slug: '/kontakt', general: true },
-	{ id: 'sok', label: 'Sök', slug: '/sok', general: true },
+	{ id: 'intervjuer', header: 'Intervjuer', label: 'KAKA snackar', slug: '/intervjuer' },
+	{ id: 'recept', header: 'Recept', label: 'Receptboken', slug: '/recept' },
+	{ id: 'tips', header: 'Tips', label: 'KAKA spanar', slug: '/tips', general: false },
+	{ id: 'unga', header: 'Unga', label: 'Ungt inflytande', slug: '/unga', general: false },
+	{ id: 'om', header: 'Om', label: 'Om oss', slug: '/om', virtual: true, sub: [] },
+	{ id: 'kontakt', header: 'Kontakt', label: 'Kontakt', slug: '/kontakt', general: true },
+	{ id: 'sok', header: 'Sök', label: 'Sök', slug: '/sok', general: true },
 ];
 
 export const buildMenu = async (): Promise<MenuItem[]> => {
@@ -32,11 +33,11 @@ export const buildMenu = async (): Promise<MenuItem[]> => {
 				sub = res.abouts.map((el) => ({
 					id: `about-${el.slug}`,
 					label: el.title,
+					header: item.header,
 					slug: `/om/${el.slug}`,
 				}));
-				if (res.abouts.length) {
-					item.slug = `/om/${res.abouts[0].slug}`;
-				}
+				if (res.abouts.length) item.slug = `/om/${res.abouts[0].slug}`;
+
 				break;
 			default:
 				break;

@@ -10,6 +10,7 @@ export type Props = {
 	children?: React.ReactNode | React.ReactNode[];
 	columns?: 2 | 3;
 	className?: string;
+	filter?: boolean;
 	hideLastOnDesktop?: boolean;
 	hideLastOnMobile?: boolean;
 };
@@ -18,6 +19,7 @@ export default function CardContainer({
 	children,
 	columns = 3,
 	className,
+	filter,
 	hideLastOnDesktop = false,
 	hideLastOnMobile = false,
 }: Props) {
@@ -37,7 +39,10 @@ export default function CardContainer({
 	}, [isDesktop]);
 
 	return (
-		<ul ref={ref} className={cn(s.container, columns === 2 && s.two, columns === 3 && s.three, className)}>
+		<ul
+			ref={ref}
+			className={cn(s.container, columns === 2 && s.two, columns === 3 && s.three, className, filter && s.filter)}
+		>
 			{cards.map((row, idx) => {
 				return <React.Fragment key={idx}>{row.map((el) => el)}</React.Fragment>;
 			})}

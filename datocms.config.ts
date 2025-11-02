@@ -21,7 +21,7 @@ export default {
 		upload: async (record) => getUploadReferenceRoutes(record.id),
 	},
 	sitemap: async () => {
-		const { allNews, allAbouts } = await apiQuery(SitemapDocument, { all: true });
+		const { allNews, allAbouts, allInterviews, allRecipes, allTips } = await apiQuery(SitemapDocument, { all: true });
 
 		const dynameicRoutes = [
 			...allNews.map(({ slug, _updatedAt }) => ({
@@ -36,18 +36,27 @@ export default {
 				changeFrequency: 'weekly',
 				priority: 0.8,
 			})),
+			...allInterviews.map(({ slug, _updatedAt }) => ({
+				url: `${process.env.NEXT_PUBLIC_SITE_URL}/intervjuer/${slug}`,
+				lastModified: new Date(_updatedAt).toISOString(),
+				changeFrequency: 'weekly',
+				priority: 0.8,
+			})),
+			...allRecipes.map(({ slug, _updatedAt }) => ({
+				url: `${process.env.NEXT_PUBLIC_SITE_URL}/recept/${slug}`,
+				lastModified: new Date(_updatedAt).toISOString(),
+				changeFrequency: 'weekly',
+				priority: 0.8,
+			})),
+			...allTips.map(({ slug, _updatedAt }) => ({
+				url: `${process.env.NEXT_PUBLIC_SITE_URL}/tips/${slug}`,
+				lastModified: new Date(_updatedAt).toISOString(),
+				changeFrequency: 'weekly',
+				priority: 0.8,
+			})),
 		];
 
-		const staticRoutes = [
-			'/',
-			'/kontakt',
-			'/om',
-			'/vad-vi-gor',
-			'/pa-gang',
-			'/lar-mer',
-			'/om/in-english-verdde',
-			'/om/samegillii-verdde',
-		].map((pathname) => ({
+		const staticRoutes = ['/', '/kontakt', '/om', '/recept', '/tips', '/intervjuer', '/unga'].map((pathname) => ({
 			url: `${process.env.NEXT_PUBLIC_SITE_URL}${pathname}}`,
 			lastModified: new Date().toISOString(),
 			changeFrequency: pathname === '/' ? 'weekly' : 'monthly',

@@ -8,11 +8,11 @@ import { useEffect } from 'react';
 import SectionHeader from '@/components/layout/SectionHeader';
 
 export default function Template({ children }: { children: React.ReactNode }) {
-	const pathname = usePathname();
+	const isHome = usePathname() === '/';
 	const [showMenu] = useStore((state) => [state.showMenu]);
 
 	return (
-		<main id='content' className={cn(s.content, !showMenu && s.full)}>
+		<main id='content' className={cn(s.content, !showMenu && s.full, isHome && s.home)}>
 			<article>
 				<SectionHeader />
 				{children}

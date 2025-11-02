@@ -15,4 +15,28 @@ query Sitemap($first: IntType = 500, $skip: IntType = 0) {
 	_allNewsMeta {
 		count
 	}
+	allInterviews(first: $first, skip: $skip) {
+		title
+		slug
+		_updatedAt
+	}
+	_allInterviewsMeta {
+		count
+	}
+	allRecipes(first: $first, skip: $skip) {
+		title
+		slug
+		_updatedAt
+	}
+	_allRecipesMeta {
+		count
+	}
+	allTips(first: $first, skip: $skip) {
+		name
+		slug
+		_updatedAt
+	}
+	_allTipsMeta {
+		count
+	}
 }

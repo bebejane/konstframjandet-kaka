@@ -34,9 +34,14 @@
 	}
 
 	@include mq($until: tablet) {
-		--max-width: calc(100% - var(--logo-size-optical) - calc(var(--outer-margin) * 3));
+		--max-width: calc(100% - var(--logo-size-optical) - calc(var(--outer-margin) * 2));
+
 		transition: transform 0.3s ease-in-out;
 		transform: translateX(calc(-1 * var(--max-width)));
+		max-width: var(--max-width);
+		&.home {
+			max-width: unset;
+		}
 
 		&.full {
 			transform: translateX(0%);

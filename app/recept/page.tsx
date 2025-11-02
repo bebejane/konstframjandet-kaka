@@ -24,7 +24,7 @@ export default async function Recipes({ searchParams }: PageProps<'/recept'>) {
 					options={allRecipeCategories.map(({ slug: value, title: label }) => ({ value, label }))}
 				/>
 			)}
-			<CardContainer key={filter}>
+			<CardContainer key={filter} filter={true}>
 				{allRecipes
 					.filter(({ category }) => !filter || category.find((cat) => cat.slug === filter))
 					.map(({ id, image, intro, title, slug }) => (

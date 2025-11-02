@@ -19,12 +19,13 @@ export default async function Tips({ searchParams }: PageProps<'/tips'>) {
 		<>
 			{allTipCategories.length > 0 && (
 				<FilterBar
+					key={'filter'}
 					value={filter}
-					pathname={'/tips'}
+					pathname={'/unga'}
 					options={allTipCategories.map(({ slug: value, title: label }) => ({ value, label }))}
 				/>
 			)}
-			<CardContainer key={filter}>
+			<CardContainer key={filter} filter={true}>
 				{allTips
 					.filter(({ category }) => !filter || category.find((cat) => cat.slug === filter))
 					.map(({ id, image, intro, name, slug }) => (

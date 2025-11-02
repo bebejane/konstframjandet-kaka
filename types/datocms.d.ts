@@ -5401,7 +5401,7 @@ type SitemapQueryVariables = Exact<{
 }>;
 
 
-type SitemapQuery = { __typename?: 'Query', allAbouts: Array<{ __typename?: 'AboutRecord', slug: string, title: string, _updatedAt: any }>, _allAboutsMeta: { __typename?: 'CollectionMetadata', count: any }, allNews: Array<{ __typename?: 'NewsRecord', title: string, slug: string, _updatedAt: any }>, _allNewsMeta: { __typename?: 'CollectionMetadata', count: any } };
+type SitemapQuery = { __typename?: 'Query', allAbouts: Array<{ __typename?: 'AboutRecord', slug: string, title: string, _updatedAt: any }>, _allAboutsMeta: { __typename?: 'CollectionMetadata', count: any }, allNews: Array<{ __typename?: 'NewsRecord', title: string, slug: string, _updatedAt: any }>, _allNewsMeta: { __typename?: 'CollectionMetadata', count: any }, allInterviews: Array<{ __typename?: 'InterviewRecord', title: string, slug: string, _updatedAt: any }>, _allInterviewsMeta: { __typename?: 'CollectionMetadata', count: any }, allRecipes: Array<{ __typename?: 'RecipeRecord', title: string, slug: string, _updatedAt: any }>, _allRecipesMeta: { __typename?: 'CollectionMetadata', count: any }, allTips: Array<{ __typename?: 'TipRecord', name: string, slug: string, _updatedAt: any }>, _allTipsMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type StartQueryVariables = Exact<{ [key: string]: never; }>;
 

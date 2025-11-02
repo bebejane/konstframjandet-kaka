@@ -20,17 +20,17 @@ export default function SectionHeader() {
 
 	const sectionId = (pathname.split('/')?.[1] || 'home') as Section['id'];
 	const section = sections.find(({ id }) => id === sectionId);
-	const label = isHome ? null : section?.label;
+	const header = isHome ? null : section?.header;
 	const isSearch = sectionId === 'search';
 
-	const header = (
+	const content = (
 		<h2>
-			<span key={label}>
-				{label?.split('').map((c, idx) => (
+			<span key={header}>
+				{header?.split('').map((c, idx) => (
 					<span
 						key={`${idx}`}
 						style={{
-							animationDelay: `${(idx / label.length) * 0.6}s`,
+							animationDelay: `${(idx / header.length) * 0.6}s`,
 						}}
 					>
 						{c}
@@ -46,7 +46,7 @@ export default function SectionHeader() {
 				<img src='/images/logo.svg' />
 			</Link>
 			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)} key={sectionId}>
-				{section?.slug && <Link href={section?.slug}>{header}</Link>}
+				{section?.slug && <Link href={section?.slug}>{content}</Link>}
 			</header>
 			{!isHome && (
 				<>
