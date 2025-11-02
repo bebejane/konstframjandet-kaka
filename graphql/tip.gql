@@ -17,6 +17,7 @@ query AllTipsCategories($first: IntType = 100, $skip: IntType = 0) {
 	allTipCategories(first: $first, skip: $skip, orderBy: [title_ASC]) {
 		id
 		title
+		slug
 	}
 	_allTipCategoriesMeta {
 		count
@@ -35,6 +36,7 @@ fragment TipFragment on TipRecord {
 	category {
 		id
 		title
+		slug
 	}
 	content {
 		value
@@ -119,6 +121,7 @@ fragment TipFragmentLight on TipRecord {
 	category {
 		id
 		title
+		slug
 	}
 	slug
 }

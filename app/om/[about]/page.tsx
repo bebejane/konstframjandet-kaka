@@ -6,31 +6,26 @@ import { DraftMode } from 'next-dato-utils/components';
 import { buildMetadata } from '@/app/layout';
 import { Metadata } from 'next';
 
-export type Props = {
-	about: AboutRecord;
-};
-
-const noBackLinks = ['/om/in-english-verdde', '/om/samegillii-verdde'];
-
-export default async function AboutItem({ params }: PageProps<'/om/[about]'>) {
+export default async function AboutItemPage({ params }: PageProps<'/om/[about]'>) {
 	const { about: slug } = await params;
 	const { about, draftUrl } = await apiQuery(AboutDocument, { variables: { slug } });
+
 	if (!about) return notFound();
 
-	const { intro, title, content, image } = about;
+	const { title, intro, content, image } = about;
 
 	return (
 		<>
 			<Article title={title} image={image as FileField} intro={intro} content={content} />
-			{!noBackLinks.includes(`/om/${slug}`) && <BackButton href='/om'>Visa alla</BackButton>}
+			<BackButton href='/om'>Visa alla artiklar om oss</BackButton>
 			<DraftMode url={draftUrl} path={`/om/${slug}`} />
 		</>
 	);
 }
 
 export async function generateStaticParams() {
-	const { allAbouts } = await apiQuery(AllAboutsDocument);
-	return allAbouts.map(({ slug: about }) => ({ about }));
+	const { allAbouts } = await apiQuery(AllAboutsDocument, { all: true });
+	return allAbouts.map(({ slug: intervju }) => ({ intervju }));
 }
 
 export async function generateMetadata({ params }: PageProps<'/om/[about]'>): Promise<Metadata> {

@@ -17,6 +17,7 @@ query AllRecipeCategories($first: IntType = 100, $skip: IntType = 0) {
 	allRecipeCategories(first: $first, skip: $skip, orderBy: [title_ASC]) {
 		id
 		title
+		slug
 	}
 	_allRecipeCategoriesMeta {
 		count
@@ -38,6 +39,7 @@ fragment RecipeFragment on RecipeRecord {
 	category {
 		id
 		title
+		slug
 	}
 	slug
 	content {
@@ -122,6 +124,7 @@ fragment RecipeFragmentLight on RecipeRecord {
 	category {
 		id
 		title
+		slug
 	}
 	image {
 		...ImageThumbnailFragment

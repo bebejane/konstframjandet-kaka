@@ -1,8 +1,8 @@
-query AllInterviews {
-	interviews: allInterviews(first: 100) {
+query AllInterviews($first: IntType = 100, $skip: IntType = 0) {
+	allInterviews(first: $first, skip: $skip) {
 		...InterviewFragmentLight
 	}
-	pagination: _allInterviewsMeta {
+	_allInterviewsMeta {
 		count
 	}
 }
@@ -13,10 +13,13 @@ query Interview($slug: String) {
 	}
 }
 
-query AllInterviewsCategories {
-	categories: allInterviewCategories(first: 100, orderBy: [title_ASC]) {
+query AllInterviewsCategories($first: IntType = 100, $skip: IntType = 0) {
+	allInterviewCategories(first: $first, skip: $skip, orderBy: [title_ASC]) {
 		id
 		title
+	}
+	_allInterviewsMeta {
+		count
 	}
 }
 
@@ -123,10 +126,4 @@ fragment InterviewFragmentLight on InterviewRecord {
 	}
 	slug
 	_createdAt
-}
-
-fragment SeoMetaTagsFragment on Tag {
-	attributes
-	content
-	tag
 }

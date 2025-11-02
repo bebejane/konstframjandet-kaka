@@ -1,4 +1,4 @@
-import { ContactDocument, GeneralDocument, GlobalDocument } from '@/graphql';
+import { ContactDocument } from '@/graphql';
 import { Article, PageHeader } from '@/components';
 import { apiQuery } from 'next-dato-utils/api';
 import { notFound } from 'next/navigation';
@@ -13,15 +13,13 @@ export type Props = {
 
 export default async function Contact() {
 	const { contact, draftUrl } = await apiQuery(ContactDocument);
-	const { general } = await apiQuery(GeneralDocument);
 
 	if (!contact) return notFound();
-	const { id, image, intro, content } = contact;
+	const { id, image, intro, content, title } = contact;
 
 	return (
 		<>
-			<PageHeader header={general?.contactSv} headerSmi={general?.contactSmi} content={intro} />
-			<Article key={id} image={image as FileField} imageSize='small' content={content} />
+			<Article title={title} image={image as FileField} intro={intro} imageSize='small' content={content} />
 			<DraftMode url={draftUrl} path={`/kontakt`} />
 		</>
 	);

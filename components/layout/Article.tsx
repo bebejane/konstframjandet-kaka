@@ -12,11 +12,10 @@ import BalanceText from 'react-wrap-balancer';
 import ArticleImage from '@/components/layout/ArticleImage';
 
 export type ArticleProps = {
-	id: string;
 	children?: React.ReactNode | React.ReactNode[] | undefined;
-	title?: string;
+	title?: string | null;
 	subtitle?: string;
-	intro?: string;
+	intro?: string | null;
 	image?: FileField;
 	imageSize?: 'small' | 'medium' | 'large';
 	content?: any;
@@ -26,7 +25,6 @@ export type ArticleProps = {
 };
 
 export default function Article({
-	id,
 	children,
 	title,
 	content,
@@ -60,7 +58,7 @@ export default function Article({
 				{content && (
 					<>
 						<div className='structured'>
-							<StructuredContent id={id} content={content} className='structured' />
+							<StructuredContent content={content} className='structured' />
 						</div>
 					</>
 				)}

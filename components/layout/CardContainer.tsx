@@ -5,7 +5,6 @@ import cn from 'classnames';
 import { chunkArray } from '@/lib/utils';
 import useDevice from '@/lib/hooks/useDevice';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
 
 export type Props = {
 	children?: React.ReactNode | React.ReactNode[];
@@ -24,9 +23,7 @@ export default function CardContainer({
 }: Props) {
 	const buildCards = () => {
 		return chunkArray(
-			(Array.isArray(children) ? children : [children]).map((el) =>
-				React.cloneElement(el as ReactElement, { hideLastOnDesktop, hideLastOnMobile })
-			),
+			(Array.isArray(children) ? children : [children]).map((el) => React.cloneElement(el as ReactElement)),
 			!isDesktop ? 2 : columns
 		) as [React.ReactNode[]];
 	};

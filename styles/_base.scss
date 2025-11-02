@@ -75,8 +75,9 @@ html {
 }
 
 html,
-body {
-	//height: 100%;
+body,
+article {
+	min-height: 100vh;
 }
 
 ::-webkit-scrollbar {

@@ -1,54 +1,41 @@
 import s from './FilterBar.module.scss';
 import cn from 'classnames';
-import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import useDevice from '@/lib/hooks/useDevice';
+import Link from 'next/link';
 
 export type FilterOption = {
-	id: string;
-	label: string;
+	value: string | null;
+	label: string | null;
 };
 
 export type Props = {
 	options: FilterOption[];
-	multi?: boolean;
-	onChange: (value: string[]) => void;
+	pathname: string;
+	value?: string | null;
 };
 
-export default function FilterBar({ options = [], onChange, multi = false }: Props) {
-	const [selected, setSelected] = useState<FilterOption[]>([]);
-	const [open, setOpen] = useState(true);
-	const { isMobile } = useDevice();
-
-	useEffect(() => {
-		onChange(multi ? selected.map(({ id }) => id) : selected[0]?.id ? [selected[0]?.id] : []);
-	}, [selected]);
+export default function FilterBar({ options = [], pathname, value }: Props) {
+	const open = true;
+	const isMobile = false;
 
 	return (
 		<nav className={cn(s.filter, open && isMobile && s.open)}>
-			<ul onClick={() => setOpen(!open)}>
-				<li onClick={() => setSelected([])} className={cn(!selected?.length && s.selected)}>
-					Alla
-					<span className={s.arrow}>›</span>
-				</li>
-				{options.map((opt, idx) => (
-					<li
-						key={idx}
-						onClick={() =>
-							((!open && isMobile) || !isMobile) &&
-							setSelected(
-								selected?.find(({ id }) => id === opt.id)
-									? selected?.filter(({ id }) => id !== opt.id)
-									: multi
-										? [...selected, opt]
-										: [opt]
-							)
-						}
-						className={cn(selected?.find(({ id }) => id === opt.id) && s.selected)}
-					>
-						{opt.label}
-						<span className={s.arrow}>›</span>
+			<ul>
+				<Link href={{ pathname }} className={cn(!value && s.selected)}>
+					<li>
+						Alla <span className={s.arrow}>›</span>
 					</li>
+				</Link>
+				{options.map((opt, idx) => (
+					<Link
+						key={idx}
+						className={cn(value === opt.value && s.selected)}
+						href={{ pathname, query: { filter: opt.value } }}
+					>
+						<li key={idx}>
+							{opt.label}
+							<span className={s.arrow}>›</span>
+						</li>
+					</Link>
 				))}
 			</ul>
 		</nav>

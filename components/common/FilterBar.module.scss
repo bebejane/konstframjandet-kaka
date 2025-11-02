@@ -9,7 +9,7 @@
 		overflow: hidden;
 	}
 
-	> ul {
+	ul {
 		list-style: none;
 		display: flex;
 		width: 100%;
@@ -33,13 +33,14 @@
 			margin-right: calc(-1 * var(--outer-margin));
 		}
 
-		li {
-			padding-right: 1em;
-			cursor: pointer;
-
+		a {
 			&.selected {
 				font-weight: bold;
 			}
+		}
+		li {
+			padding-right: 1em;
+			cursor: pointer;
 		}
 	}
 

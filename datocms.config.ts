@@ -1,14 +1,23 @@
 import { apiQuery } from 'next-dato-utils/api';
 import { SitemapDocument } from '@/graphql';
-import { DatoCmsConfig, getUploadReferenceRoutes } from 'next-dato-utils/config';
+import { DatoCmsConfig, getUploadReferenceRoutes, getItemReferenceRoutes } from 'next-dato-utils/config';
 import { MetadataRoute } from 'next';
 import { GlobalDocument } from '@/graphql';
 
 export default {
 	routes: {
-		start: async () => ['/'],
 		general: async () => ['/'],
+		start: async () => ['/'],
 		about: async ({ slug }) => [`/om/${slug}`],
+		news: async ({ slug }) => [`/nyheter/${slug}`],
+		interview: async ({ slug }) => [`/intervjuer/${slug}`],
+		youth: async ({ slug }) => [`/unga/${slug}`],
+		recipe: async ({ slug }) => [`/recept/${slug}`],
+		recepie_category: async ({ id }) => ['/recept', ...((await getItemReferenceRoutes(id as string)) ?? [])],
+		tip: async ({ slug }) => [`/tips/${slug}`],
+		tips_category: async ({ id }) => ['/tips', ...((await getItemReferenceRoutes(id as string)) ?? [])],
+		contact: async () => ['/kontakt'],
+		in_english: async () => ['/in-english'],
 		upload: async (record) => getUploadReferenceRoutes(record.id),
 	},
 	sitemap: async () => {

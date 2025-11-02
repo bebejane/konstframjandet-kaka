@@ -1,7 +1,7 @@
 import { TypedDocumentNode } from '@apollo/client/core';
 import { apiQuery } from 'next-dato-utils/api';
 import type { ApiQueryOptions } from 'next-dato-utils/api';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import React from 'react';
 
 export const isServer = typeof window === 'undefined';

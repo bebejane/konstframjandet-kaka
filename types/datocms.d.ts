@@ -3474,6 +3474,7 @@ type RecipeCategoryModelFilter = {
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
   _updatedAt?: InputMaybe<UpdatedAtFilter>;
   id?: InputMaybe<ItemIdFilter>;
+  slug?: InputMaybe<SlugFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -3517,7 +3518,8 @@ type RecipeCategoryRecord = RecordInterface & {
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
-  title?: Maybe<Scalars['String']['output']>;
+  slug: Scalars['String']['output'];
+  title: Scalars['String']['output'];
 };
 
 
@@ -4247,6 +4249,7 @@ type TipCategoryModelFilter = {
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
   _updatedAt?: InputMaybe<UpdatedAtFilter>;
   id?: InputMaybe<ItemIdFilter>;
+  slug?: InputMaybe<SlugFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -4290,7 +4293,8 @@ type TipCategoryRecord = RecordInterface & {
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
-  title?: Maybe<Scalars['String']['output']>;
+  slug: Scalars['String']['output'];
+  title: Scalars['String']['output'];
 };
 
 
@@ -5215,10 +5219,13 @@ type InEnglishQuery = { __typename?: 'Query', inEnglish?: { __typename?: 'InEngl
         | { __typename: 'VideoRecord', id: any, title: string, video: { __typename?: 'VideoField', height: any, width: any, title: string, provider: string, providerUid: string, thumbnailUrl: string, url: string } }
       > } | null, _seoMetaTags: Array<{ __typename?: 'Tag', attributes?: any | null, content?: string | null, tag: string }> } | null };
 
-type AllInterviewsQueryVariables = Exact<{ [key: string]: never; }>;
+type AllInterviewsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars['IntType']['input']>;
+}>;
 
 
-type AllInterviewsQuery = { __typename?: 'Query', interviews: Array<{ __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }>, pagination: { __typename?: 'CollectionMetadata', count: any } };
+type AllInterviewsQuery = { __typename?: 'Query', allInterviews: Array<{ __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }>, _allInterviewsMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type InterviewQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -5241,10 +5248,13 @@ type InterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interv
         | { __typename: 'VideoRecord', id: any, title: string, video: { __typename?: 'VideoField', height: any, width: any, title: string, provider: string, providerUid: string, thumbnailUrl: string, url: string } }
       > } | null, _seoMetaTags: Array<{ __typename?: 'Tag', attributes?: any | null, content?: string | null, tag: string }> } | null };
 
-type AllInterviewsCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+type AllInterviewsCategoriesQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars['IntType']['input']>;
+}>;
 
 
-type AllInterviewsCategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }> };
+type AllInterviewsCategoriesQuery = { __typename?: 'Query', allInterviewCategories: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, _allInterviewsMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type InterviewFragment = { __typename?: 'InterviewRecord', _createdAt: any, id: any, intro: string, title: string, slug: string, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null, content?: { __typename?: 'InterviewModelContentField', value: any, blocks: Array<
       | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
@@ -5322,14 +5332,14 @@ type AllRecipesQueryVariables = Exact<{
 }>;
 
 
-type AllRecipesQuery = { __typename?: 'Query', allRecipes: Array<{ __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title?: string | null }>, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }>, _allRecipesMeta: { __typename?: 'CollectionMetadata', count: any } };
+type AllRecipesQuery = { __typename?: 'Query', allRecipes: Array<{ __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title: string, slug: string }>, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }>, _allRecipesMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type RecipeQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-type RecipeQuery = { __typename?: 'Query', recipe?: { __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, thumb: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title?: string | null }>, content?: { __typename?: 'RecipeModelContentField', value: any, blocks: Array<
+type RecipeQuery = { __typename?: 'Query', recipe?: { __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, thumb: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title: string, slug: string }>, content?: { __typename?: 'RecipeModelContentField', value: any, blocks: Array<
         | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
         | { __typename: 'ImageRecord', id: any, layout: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }
         | { __typename: 'LinkButtonRecord', id: any, link:
@@ -5351,9 +5361,9 @@ type AllRecipeCategoriesQueryVariables = Exact<{
 }>;
 
 
-type AllRecipeCategoriesQuery = { __typename?: 'Query', allRecipeCategories: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title?: string | null }>, _allRecipeCategoriesMeta: { __typename?: 'CollectionMetadata', count: any } };
+type AllRecipeCategoriesQuery = { __typename?: 'Query', allRecipeCategories: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title: string, slug: string }>, _allRecipeCategoriesMeta: { __typename?: 'CollectionMetadata', count: any } };
 
-type RecipeFragment = { __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, thumb: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title?: string | null }>, content?: { __typename?: 'RecipeModelContentField', value: any, blocks: Array<
+type RecipeFragment = { __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, thumb: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title: string, slug: string }>, content?: { __typename?: 'RecipeModelContentField', value: any, blocks: Array<
       | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
       | { __typename: 'ImageRecord', id: any, layout: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }
       | { __typename: 'LinkButtonRecord', id: any, link:
@@ -5369,7 +5379,7 @@ type RecipeFragment = { __typename: 'RecipeRecord', _modelApiKey: string, id: an
       | { __typename: 'VideoRecord', id: any, title: string, video: { __typename?: 'VideoField', height: any, width: any, title: string, provider: string, providerUid: string, thumbnailUrl: string, url: string } }
     > } | null, _seoMetaTags: Array<{ __typename?: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
-type RecipeFragmentLightFragment = { __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title?: string | null }>, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } };
+type RecipeFragmentLightFragment = { __typename: 'RecipeRecord', _modelApiKey: string, id: any, title: string, intro: string, slug: string, category: Array<{ __typename?: 'RecipeCategoryRecord', id: any, title: string, slug: string }>, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } };
 
 type SiteSearchQueryVariables = Exact<{
   aboutIds?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
@@ -5468,14 +5478,14 @@ type AllTipsQueryVariables = Exact<{
 }>;
 
 
-type AllTipsQuery = { __typename?: 'Query', allTips: Array<{ __typename?: 'TipRecord', id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title?: string | null }> }>, _allTipsMeta: { __typename?: 'CollectionMetadata', count: any } };
+type AllTipsQuery = { __typename?: 'Query', allTips: Array<{ __typename?: 'TipRecord', id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title: string, slug: string }> }>, _allTipsMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type TipQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-type TipQuery = { __typename?: 'Query', tip?: { __typename?: 'TipRecord', _createdAt: any, id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title?: string | null }>, content?: { __typename?: 'TipModelContentField', value: any, blocks: Array<
+type TipQuery = { __typename?: 'Query', tip?: { __typename?: 'TipRecord', _createdAt: any, id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title: string, slug: string }>, content?: { __typename?: 'TipModelContentField', value: any, blocks: Array<
         | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
         | { __typename: 'ImageRecord', id: any, layout: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }
         | { __typename: 'LinkButtonRecord', id: any, link:
@@ -5497,9 +5507,9 @@ type AllTipsCategoriesQueryVariables = Exact<{
 }>;
 
 
-type AllTipsCategoriesQuery = { __typename?: 'Query', allTipCategories: Array<{ __typename?: 'TipCategoryRecord', id: any, title?: string | null }>, _allTipCategoriesMeta: { __typename?: 'CollectionMetadata', count: any } };
+type AllTipsCategoriesQuery = { __typename?: 'Query', allTipCategories: Array<{ __typename?: 'TipCategoryRecord', id: any, title: string, slug: string }>, _allTipCategoriesMeta: { __typename?: 'CollectionMetadata', count: any } };
 
-type TipFragment = { __typename?: 'TipRecord', _createdAt: any, id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title?: string | null }>, content?: { __typename?: 'TipModelContentField', value: any, blocks: Array<
+type TipFragment = { __typename?: 'TipRecord', _createdAt: any, id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title: string, slug: string }>, content?: { __typename?: 'TipModelContentField', value: any, blocks: Array<
       | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
       | { __typename: 'ImageRecord', id: any, layout: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }
       | { __typename: 'LinkButtonRecord', id: any, link:
@@ -5515,7 +5525,7 @@ type TipFragment = { __typename?: 'TipRecord', _createdAt: any, id: any, intro: 
       | { __typename: 'VideoRecord', id: any, title: string, video: { __typename?: 'VideoField', height: any, width: any, title: string, provider: string, providerUid: string, thumbnailUrl: string, url: string } }
     > } | null, _seoMetaTags: Array<{ __typename?: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
-type TipFragmentLightFragment = { __typename?: 'TipRecord', id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title?: string | null }> };
+type TipFragmentLightFragment = { __typename?: 'TipRecord', id: any, intro: string, name: string, slug: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, category: Array<{ __typename?: 'TipCategoryRecord', id: any, title: string, slug: string }> };
 
 type AllYouthsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['IntType']['input']>;
