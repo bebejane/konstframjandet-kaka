@@ -4,10 +4,8 @@ import s from './SectionHeader.module.scss';
 import cn from 'classnames';
 import React from 'react';
 import Link from 'next/link';
-import { MenuItem } from '@/lib/menu';
-//import { usePage } from '@/lib/context/page';
+import { MenuItem, Section, sections } from '@/lib/menu';
 import useStore from '@/lib/store';
-//import Logo from '/public/images/logo-text.svg';
 import { usePathname } from 'next/navigation';
 
 export type SectionHeaderProps = {
@@ -15,34 +13,20 @@ export type SectionHeaderProps = {
 	overview?: boolean;
 };
 
-const sections = {
-	'home': 'Hem',
-	'about': 'Om',
-	'recipes': 'Recept',
-	'tips': 'Tips',
-	'interviews': 'Intervjuer',
-	'youths': 'Unga',
-	'news': 'Nyheter',
-	'contact': 'Kontakt',
-	'in-english': 'In English',
-	'search': 'Sök',
-};
-
 export default function SectionHeader() {
 	const pathname = usePathname();
-	//const { title } = usePage();
-
+	const isHome = pathname === '/';
 	const [showMenu] = useStore((state) => [state.showMenu]);
-	const { section, parent, isHome, slugs } = usePage();
 
-	const parentPath = slugs[0]?.parent;
-	const isSearch = section === 'search';
-	const label = !isSearch ? `${!isHome ? `${sections[section]}` : ''}` : 'Sök';
+	const sectionId = (pathname.split('/')?.[1] || 'home') as Section['id'];
+	const section = sections.find(({ id }) => id === sectionId);
+	const label = isHome ? null : section?.label;
+	const isSearch = sectionId === 'search';
 
 	const header = (
 		<h2>
 			<span key={label}>
-				{label.split('').map((c, idx) => (
+				{label?.split('').map((c, idx) => (
 					<span
 						key={`${idx}`}
 						style={{
@@ -59,10 +43,10 @@ export default function SectionHeader() {
 	return (
 		<>
 			<Link href='/' className={cn(s.logo, isHome && s.home)}>
-				{/*	<Logo />*/}
+				<img src='/images/logo.svg' />
 			</Link>
-			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)}>
-				{parentPath && asPath !== parentPath && parent ? <Link href={parentPath}>{header}</Link> : <>{header}</>}
+			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)} key={sectionId}>
+				{section?.slug && <Link href={section?.slug}>{header}</Link>}
 			</header>
 			{!isHome && (
 				<>

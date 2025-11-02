@@ -1,28 +1,34 @@
 import { apiQuery } from 'next-dato-utils/api';
 import { MenuDocument } from '../graphql';
 
-const base: Menu = [
-	{ id: 'home', label: 'Hem', slug: '/', general: true },
-	//{ id: 'news', label: 'Nyheter', slug: '/nyheter', general: true },
-	{ id: 'interviews', label: 'KAKA snackar', slug: '/intervjuer' },
-	{ id: 'recipes', label: 'Receptboken', slug: '/recept' },
+export type Section = {
+	id: string;
+	label: string;
+	slug: string;
+	general?: boolean;
+	virtual?: boolean;
+	sub?: MenuItem[];
+};
+
+export const sections: Section[] = [
+	{ id: 'hem', label: 'Hem', slug: '/', general: true },
+	{ id: 'intervjuer', label: 'KAKA snackar', slug: '/intervjuer' },
+	{ id: 'recept', label: 'Receptboken', slug: '/recept' },
 	{ id: 'tips', label: 'KAKA spanar', slug: '/tips', general: false },
-	{ id: 'youths', label: 'Ungt inflytande', slug: '/unga', general: false },
-	{ id: 'about', label: 'Om oss', slug: '/om', virtual: true, sub: [] },
-	{ id: 'contact', label: 'Kontakt', slug: '/kontakt', general: true },
-	{ id: 'search', label: 'Sök', slug: '/sok', general: true },
-	//{ id: 'in-english', label: 'In English', slug: '/in-english', general: true }
+	{ id: 'unga', label: 'Ungt inflytande', slug: '/unga', general: false },
+	{ id: 'om', label: 'Om oss', slug: '/om', virtual: true, sub: [] },
+	{ id: 'kontakt', label: 'Kontakt', slug: '/kontakt', general: true },
+	{ id: 'sok', label: 'Sök', slug: '/sok', general: true },
 ];
 
-export const buildMenu = async () => {
+export const buildMenu = async (): Promise<MenuItem[]> => {
 	const res = await apiQuery(MenuDocument);
 
-	const menu = base.map((item) => {
-		let sub: MenuItem[];
+	const menu = sections.map((item) => {
+		let sub: MenuItem[] | null = null;
 
 		switch (item.id) {
 			case 'about':
-				//@ts-ignore
 				sub = res.abouts.map((el) => ({
 					id: `about-${el.slug}`,
 					label: el.title,
@@ -37,12 +43,11 @@ export const buildMenu = async () => {
 		}
 		return {
 			...item,
-			sub: sub || item.sub || null,
-			count: res[`${item.id}Meta`]?.count ?? null,
+			sub: sub !== null ? sub : (item.sub ?? null),
 		};
 	});
 
-	return menu.filter(({ count }) => count || count === null);
+	return menu as MenuItem[];
 };
 
 export type Menu = MenuItem[];
@@ -54,7 +59,7 @@ export type MenuQueryResponse = {
 };
 
 export type MenuItem = {
-	id: SectionId;
+	id: Section['id'];
 	label: string;
 	slug?: string;
 	sub?: MenuItem[];

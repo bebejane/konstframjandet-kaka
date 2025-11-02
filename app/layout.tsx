@@ -1,6 +1,6 @@
 import '@/styles/index.scss';
 import s from './layout.module.scss';
-import { Footer, FullscreenGallery, Menu, MenuMobile } from '@/components';
+import { Footer, FullscreenGallery, Menu } from '@/components';
 import { buildMenu } from '@/lib/menu';
 import { apiQuery } from 'next-dato-utils/api';
 import { FooterDocument, GlobalDocument } from '@/graphql';

@@ -2,7 +2,6 @@
 
 import s from './Menu.module.scss';
 import cn from 'classnames';
-import { useRouter } from 'next/router';
 import { useState, useRef, useEffect } from 'react';
 import type { Menu, MenuItem } from '@/lib/menu';
 import Link from 'next/link';
@@ -34,22 +33,20 @@ export default function Menu({ items }: MenuProps) {
 	const { isDesktop, isMobile } = useDevice();
 
 	const onSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		router.push(`/sok?q=${searchQuery}`, undefined, { shallow: true, scroll: true });
-		setSearchFocus(false);
+		//e.preventDefault();
+		//router.push(`/sok?q=${searchQuery}`, undefined, { shallow: true, scroll: true });
+		//setSearchFocus(false);
 	};
 
 	useEffect(() => {
-		//const handleRouteChangeStart = (path: string) => {
-		setPath(path);
 		!isDesktop && setShowMenu(false);
-		//};
-		//router.events.on('routeChangeStart', handleRouteChangeStart);
-		//return () => router.events.off('routeChangeStart', handleRouteChangeStart);
+		setPath(path);
 	}, [isDesktop, pathname]);
 
 	useEffect(() => {
-		const footerHeight = document.getElementById('footer').clientHeight - 1;
+		const footer = document.getElementById('footer');
+		if (!footer || !menuRef.current) return;
+		const footerHeight = footer.clientHeight - 1;
 		const menuOffset = menuRef.current.offsetTop;
 		const footerScrollPosition =
 			scrolledPosition + viewportHeight < documentHeight - footerHeight
@@ -122,7 +119,7 @@ export default function Menu({ items }: MenuProps) {
 
 export type MenuTreeProps = {
 	item: MenuItem;
-	level?: number;
+	level: number;
 	selected: MenuItem | undefined;
 	setSelected: (item: MenuItem) => void;
 	path: string;
@@ -133,7 +130,7 @@ export function MenuTree({ item, level, selected, setSelected, path }: MenuTreeP
 	const locale = 'sv';
 	const itemIncludesPath = (item: MenuItem) => {
 		if (!item) return false;
-		const slugs = [item.slug].map((s) => (s.startsWith(`/${locale}`) ? s.replace(`/${locale}`, '') : s));
+		const slugs = [item.slug].map((s) => (s?.startsWith(`/${locale}`) ? s.replace(`/${locale}`, '') : s));
 		const p = path.startsWith(`/${locale}`) ? path.replace(`/${locale}`, '') : path;
 		return slugs.includes(p);
 	};
@@ -151,12 +148,12 @@ export function MenuTree({ item, level, selected, setSelected, path }: MenuTreeP
 
 	const isSelected = item.slug === selected?.slug && !item.virtual;
 	const isLink = item.slug;
-	const isBold = level === 0 || item.sub?.length > 0;
+	const isBold = level === 0 || (item?.sub && item.sub?.length > 0);
 	const label = item.label;
 
 	return (
 		<li data-parent={item.id} className={cn(isSelected && s.active, isBold && s.bold)}>
-			{isLink ? (
+			{isLink && item.slug ? (
 				<Link onClick={expand} href={item.slug}>
 					{label}
 				</Link>

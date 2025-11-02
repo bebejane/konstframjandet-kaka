@@ -1,3 +1,2 @@
 search
-menyn
-sectionheader
+filter: mobile

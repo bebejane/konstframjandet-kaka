@@ -30,10 +30,6 @@
 		@include mq($until: tablet) {
 			width: 100%;
 		}
-
-		@include mq($from: wide) {
-			//width: calc(100% - (2 * var(--wide-margin)));
-		}
 	}
 
 	margin-top: 2.5rem;
@@ -60,29 +56,6 @@
 		}
 	}
 
-	.archive {
-		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		z-index: -1;
-		font-family: var(--headline-font);
-		font-weight: bold;
-		margin-top: -0.15em;
-		letter-spacing: 0.2em;
-		font-size: 2.7rem;
-		-webkit-text-fill-color: transparent;
-		-webkit-text-stroke: 1px;
-		text-align: center;
-		color: rgb(47, 47, 47);
-		width: 100%;
-
-		@include mq($from: tablet) {
-			margin-top: -0.08em;
-			width: calc(100% - var(--total-outer-margin));
-		}
-	}
-
 	a {
 		//width: 100%;
 
@@ -94,17 +67,6 @@
 			width: 100%;
 
 			> span {
-				/*
-        &:hover {
-          padding-left: 1em;
-          padding-right: 1em;
-          padding-top: 0.5em;
-          padding-bottom: 0.5em;
-          border-radius: 1.5em;
-          background-color: var(--foreground);
-        }
-        */
-
 				span {
 					animation-name: show;
 					animation-duration: 0.2s;
@@ -130,30 +92,18 @@
 	top: 0;
 	z-index: var(--z-menu);
 
-	svg {
+	img {
 		width: 200px;
 
 		@include mq($until: tablet) {
 			margin-top: 7px;
 			width: 130px;
 		}
-
-		path {
-			//transform: scale(0.8);
-
-			@include mq($until: tablet) {
-				//transform: scale(0.38);
-			}
-		}
 	}
 
 	&.home {
-		svg,
-		g,
-		path {
-			@include mq($from: tablet) {
-				fill: var(--white) !important;
-			}
+		img {
+			filter: invert(1);
 		}
 	}
 }
@@ -162,7 +112,6 @@
 	display: none;
 	margin-bottom: var(--space);
 	width: 100%;
-	//border-bottom: 1px solid var(--black);
 
 	@include mq($until: tablet) {
 		margin-left: var(--outer-margin);
