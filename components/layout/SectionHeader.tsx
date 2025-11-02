@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { MenuItem, Section, sections } from '@/lib/menu';
 import useStore from '@/lib/store';
 import { usePathname } from 'next/navigation';
+import { Logo } from './Logo';
 
 export type SectionHeaderProps = {
 	menu: MenuItem[];
@@ -43,7 +44,7 @@ export default function SectionHeader() {
 	return (
 		<>
 			<Link href='/' className={cn(s.logo, isHome && s.home)}>
-				<img src='/images/logo.svg' />
+				<Logo />
 			</Link>
 			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)} key={sectionId}>
 				{section?.slug && <Link href={section?.slug}>{content}</Link>}

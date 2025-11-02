@@ -92,7 +92,7 @@
 	top: 0;
 	z-index: var(--z-menu);
 
-	img {
+	svg {
 		width: 200px;
 
 		@include mq($until: tablet) {

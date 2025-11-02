@@ -30,7 +30,7 @@ export default function FilterBar({ options = [], pathname, value: _value }: Pro
 	};
 
 	useEffect(() => {
-		isMobile && setValue(_value);
+		setValue(_value);
 	}, [_value, isMobile]);
 
 	const allOptions = [{ value: null, label: 'Alla' } as FilterOption].concat(options);
@@ -39,7 +39,7 @@ export default function FilterBar({ options = [], pathname, value: _value }: Pro
 	return (
 		<nav className={s.filter}>
 			<ul>
-				{(!open ? allOptions : [currentOption]).map((opt, idx) => (
+				{(!open || !isMobile ? allOptions : [currentOption]).map((opt, idx) => (
 					<Link
 						key={`${idx}-${opt.value}`}
 						className={cn((opt.value === value || (idx === 0 && !value)) && s.selected)}

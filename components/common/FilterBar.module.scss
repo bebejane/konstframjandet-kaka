@@ -12,11 +12,13 @@
 	> ul {
 		list-style: none;
 		display: flex;
+		flex-direction: row;
 		width: 100%;
 		justify-content: center;
 		margin: 0;
 
 		@include mq($until: tablet) {
+			flex-direction: column;
 			scrollbar-width: 0px;
 			overflow-x: scroll;
 			line-height: 2rem;
@@ -34,12 +36,15 @@
 		}
 
 		a {
-			width: 100%;
 			max-width: 90vw;
-			overflow: hidden;
+
 			text-align: center;
 			&.selected {
 				font-weight: bold;
+			}
+			@include mq($from: tablet) {
+				width: auto;
+				overflow: visible;
 			}
 		}
 		li {
@@ -48,10 +53,16 @@
 			cursor: pointer;
 			transform: translateX(0.4em);
 
+			@include mq($from: tablet) {
+				padding-right: 0.4em;
+			}
 			.arrow {
 				display: inline;
 				transform: rotate(90deg);
 				margin-left: 0.4em;
+				@include mq($from: tablet) {
+					display: none;
+				}
 			}
 		}
 	}
