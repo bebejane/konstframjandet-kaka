@@ -28,7 +28,7 @@ fragment TipFragment on TipRecord {
 	_createdAt
 	id
 	intro(markdown: false)
-	name
+	title
 	slug
 	image {
 		...ImageFragment
@@ -114,7 +114,7 @@ fragment TipFragment on TipRecord {
 fragment TipFragmentLight on TipRecord {
 	id
 	intro(markdown: false)
-	name
+	title
 	image {
 		...ImageThumbnailFragment
 	}

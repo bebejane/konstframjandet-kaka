@@ -12,11 +12,11 @@ export default async function TipItemPage({ params }: PageProps<'/tips/[tip]'>) 
 
 	if (!tip) return notFound();
 
-	const { name, intro, content, image } = tip;
+	const { title, intro, content, image } = tip;
 
 	return (
 		<>
-			<Article title={name} image={image as FileField} intro={intro} content={content} />
+			<Article title={title} image={image as FileField} intro={intro} content={content} />
 			<BackButton href='/tips'>Visa alla tips</BackButton>
 			<DraftMode url={draftUrl} path={`/tips/${slug}`} />
 		</>
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps<'/tips/[tip]'>): Pr
 	const { tip } = await apiQuery(TipDocument, { variables: { slug } });
 
 	return await buildMetadata({
-		title: tip?.name,
+		title: tip?.title,
 		description: tip?.intro,
 		image: tip?.image as FileField,
 		pathname: `/tips/${slug}`,

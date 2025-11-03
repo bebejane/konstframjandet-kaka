@@ -39,7 +39,9 @@
 			width: calc(100% - (var(--grid-unit) * 4));
 		}
 	}
-	.nohits {
-		margin-top: calc(var(--space) * 1);
-	}
+}
+
+.nohits {
+	text-align: center;
+	margin-top: var(--space);
 }

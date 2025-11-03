@@ -43,7 +43,7 @@ query SiteSearch(
 	allTips(first: $first, skip: $skip, filter: { id: { in: $tipIds } }) {
 		__typename
 		_modelApiKey
-		title: name
+		title
 		text: intro(markdown: false)
 		slug
 	}

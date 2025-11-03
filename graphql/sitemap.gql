@@ -32,7 +32,7 @@ query Sitemap($first: IntType = 500, $skip: IntType = 0) {
 		count
 	}
 	allTips(first: $first, skip: $skip) {
-		name
+		title
 		slug
 		_updatedAt
 	}

@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
 		return config;
 	},
 	turbopack: {
-		root: path.join(__dirname, '..'),
+		//root: path.join(__dirname, '..'),
 		resolveAlias: {
 			'datocms.config': './datocms.config.ts',
 		},

@@ -9,16 +9,20 @@ import { SearchResult } from '@datocms/cma-client/dist/types/generated/RawApiTyp
 const querySearchParams = { q: parseAsString.withDefault('') };
 const loadSearchParams = createLoader(querySearchParams);
 
-export default async function SearchResults({ query }: { query: string }) {
-	//const { q: query } = await loadSearchParams(params);
+export default async function SearchResults({
+	params,
+}: {
+	params: Promise<Record<string, string | string[] | undefined>>;
+}) {
+	const { q: query } = await loadSearchParams(params);
 	let results: SearchResult[] | null = null;
 	let count: number | null = null;
 	let error: Error | null = null;
 
 	try {
 		if (query) {
-			console.time('search');
 			const client = buildClient({ apiToken: process.env.DATOCMS_API_TOKEN as string });
+
 			const { data, meta } = await client.searchResults.rawList({
 				filter: {
 					fuzzy: false,
@@ -34,28 +38,30 @@ export default async function SearchResults({ query }: { query: string }) {
 
 			results = data;
 			count = meta.total_count;
-			console.timeEnd('search');
 		}
 	} catch (e) {
 		error = e as Error;
 	}
 
 	return (
-		<ul className={s.search}>
-			{results?.map(transformResult).map(({ id, attributes: { body_excerpt, title, url, highlight, score } }, i) => (
-				<li key={i}>
-					<h3>
-						<Link href={url}>{title.replace('Konstpedagogik — ', '')}</Link>
-					</h3>
-					<div className={s.intro}>
-						<Markdown content={body_excerpt} className={s.markdown} />
-					</div>
-					<Link href={url}>
-						<Button>Läs mer</Button>
-					</Link>
-				</li>
-			))}
-		</ul>
+		<>
+			<ul className={s.search}>
+				{results?.map(transformResult).map(({ id, attributes: { body_excerpt, title, url, highlight, score } }, i) => (
+					<li key={i}>
+						<h3>
+							<Link href={url}>{title.replace('Konstpedagogik — ', '')}</Link>
+						</h3>
+						<div className={s.intro}>
+							<Markdown content={body_excerpt} className={s.markdown} />
+						</div>
+						<Link href={url}>
+							<Button>Läs mer</Button>
+						</Link>
+					</li>
+				))}
+			</ul>
+			{!count && <p className={s.nohits}>Inga träffar för "{query}"</p>}
+		</>
 	);
 }
 

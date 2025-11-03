@@ -1,2 +1,0 @@
-search
-.name > .title Tips

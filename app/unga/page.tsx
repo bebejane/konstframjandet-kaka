@@ -1,5 +1,5 @@
 import s from './page.module.scss';
-import { AllTipsCategoriesDocument, AllTipsDocument } from '@/graphql';
+import { AllYouthsCategoriesDocument, AllYouthsDocument } from '@/graphql';
 import { CardContainer, Card, Thumbnail } from '@/components';
 import { apiQuery } from 'next-dato-utils/api';
 import { createLoader, parseAsString } from 'nuqs/server';
@@ -12,25 +12,25 @@ const loadSearchParams = createLoader(filterSearchParams);
 
 export default async function YouthPage({ searchParams }: PageProps<'/unga'>) {
 	const { filter } = await loadSearchParams(searchParams);
-	const { allTips } = await apiQuery(AllTipsDocument, { all: true });
-	const { allTipCategories } = await apiQuery(AllTipsCategoriesDocument, { all: true });
+	const { allYouths } = await apiQuery(AllYouthsDocument, { all: true });
+	const { allYouthCategories } = await apiQuery(AllYouthsCategoriesDocument, { all: true });
 
 	return (
 		<>
-			{allTipCategories.length > 0 && (
+			{allYouthCategories.length > 0 && (
 				<FilterBar
 					key={'filter'}
 					value={filter}
 					pathname={'/unga'}
-					options={allTipCategories.map(({ slug: value, title: label }) => ({ value, label }))}
+					options={allYouthCategories.map(({ slug: value, title: label }) => ({ value, label }))}
 				/>
 			)}
 			<CardContainer key={filter} filter={true}>
-				{allTips
+				{allYouths
 					.filter(({ category }) => !filter || category.find((cat) => cat.slug === filter))
-					.map(({ id, image, intro, name, slug }) => (
+					.map(({ id, image, intro, title, slug }) => (
 						<Card key={id}>
-							<Thumbnail title={name} titleRows={2} intro={intro} image={image as FileField} slug={`/unga/${slug}`} />
+							<Thumbnail title={title} titleRows={2} intro={intro} image={image as FileField} slug={`/unga/${slug}`} />
 						</Card>
 					))}
 			</CardContainer>

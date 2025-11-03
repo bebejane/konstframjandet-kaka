@@ -6,12 +6,12 @@ import { buildMetadata } from '@/app/layout';
 
 export default async function TipsPage({}: PageProps<'/tips'>) {
 	const { allTips } = await apiQuery(AllTipsDocument, { all: true });
-	return null;
+
 	return (
 		<CardContainer>
-			{allTips.map(({ id, image, intro, name, slug }) => (
-				<Card key={id}>
-					<Thumbnail title={name} titleRows={2} intro={intro} image={image as FileField} slug={`/tips/${slug}`} />
+			{allTips.map(({ image, intro, title, slug }, idx) => (
+				<Card key={idx}>
+					<Thumbnail title={title} titleRows={2} intro={intro} image={image as FileField} slug={`/tips/${slug}`} />
 				</Card>
 			))}
 		</CardContainer>

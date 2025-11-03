@@ -59,7 +59,7 @@ export default {
 		const staticRoutes = ['/', '/kontakt', '/om', '/recept', '/tips', '/intervjuer', '/unga'].map((pathname) => ({
 			url: `${process.env.NEXT_PUBLIC_SITE_URL}${pathname}}`,
 			lastModified: new Date().toISOString(),
-			changeFrequency: pathname === '/' ? 'weekly' : 'monthly',
+			changeFrequency: pathname === '/' ? 'weekly' : 'weekly',
 			priority: pathname === '/' ? 1 : 0.8,
 		}));
 
