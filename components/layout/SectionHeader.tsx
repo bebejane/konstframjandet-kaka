@@ -26,7 +26,7 @@ export default function SectionHeader() {
 
 	const content = (
 		<h2>
-			<span key={header}>
+			<span key={header} data-datocms-noindex>
 				{header?.split('').map((c, idx) => (
 					<span
 						key={`${idx}`}
@@ -46,7 +46,7 @@ export default function SectionHeader() {
 			<Link href='/' className={cn(s.logo, isHome && s.home)}>
 				<Logo />
 			</Link>
-			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)} key={sectionId}>
+			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)} key={sectionId} data-datocms-noindex>
 				{section?.slug && <Link href={section?.slug}>{content}</Link>}
 			</header>
 			{!isHome && (

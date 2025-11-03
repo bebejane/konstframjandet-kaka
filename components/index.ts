@@ -17,8 +17,6 @@ export { default as VideoPlayer } from './common/VideoPlayer';
 export { default as Article } from './layout/Article';
 export { default as Content } from './content/Content';
 export { default as Hamburger } from './layout/Hamburger';
-export { default as Logo } from './layout/Logo';
 export { default as Modal } from './layout/Modal';
-export { default as PageHeader } from './layout/PageHeader';
 export { default as Footer } from './nav/Footer';
 export { default as Menu } from './nav/Menu';

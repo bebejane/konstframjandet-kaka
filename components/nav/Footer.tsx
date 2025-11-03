@@ -15,7 +15,7 @@ export default function Footer({ footer }: FooterProps) {
 	const { email, facebook, instagram, about } = footer;
 
 	return (
-		<footer className={cn(s.footer)} id='footer'>
+		<footer className={cn(s.footer)} id='footer' data-datocms-noindex>
 			<section>
 				<div>
 					Copyright {PROJECT_NAME}, 2024 <br />

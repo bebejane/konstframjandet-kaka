@@ -1,15 +1,12 @@
 import 'dotenv/config';
 import { buildClient } from '@datocms/cma-client-node';
 
-const buildTriggerId = '33120';
+const buildTriggerId = process.env.DATOCMS_BUILD_TRIGGER_ID as string;
 const client = buildClient({ apiToken: process.env.DATOCMS_API_TOKEN as string });
 
 async function run() {
 	console.log('Rebuild');
-	console.time('Rebuild');
 	const res = await client.buildTriggers.reindex(buildTriggerId);
-	console.log(res);
-	console.timeEnd('Rebuild');
 }
 
 async function search(query: string) {
@@ -29,5 +26,5 @@ async function search(query: string) {
 	console.log(JSON.stringify(searchResults, null, 2));
 }
 
-search('Gävleborg');
-//run();
+//search('Gävleborg');
+run();

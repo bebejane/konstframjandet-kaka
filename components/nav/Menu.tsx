@@ -10,12 +10,13 @@ import useStore from '@/lib/store';
 import { useScrollInfo } from 'next-dato-utils/hooks';
 import { useWindowSize } from 'usehooks-ts';
 import useDevice from '@/lib/hooks/useDevice';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export type MenuProps = { items: Menu };
 
 export default function Menu({ items }: MenuProps) {
 	const pathname = usePathname();
+	const router = useRouter();
 	const menuRef = useRef<HTMLUListElement | null>(null);
 	const [showMenu, setShowMenu, searchQuery, setSearchQuery] = useStore((state) => [
 		state.showMenu,
@@ -34,8 +35,8 @@ export default function Menu({ items }: MenuProps) {
 
 	const onSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		//router.push(`/sok?q=${searchQuery}`, undefined, { shallow: true, scroll: true });
-		//setSearchFocus(false);
+		router.push(`/sok?q=${searchQuery}`, { scroll: true });
+		setSearchFocus(false);
 	};
 
 	useEffect(() => {
@@ -91,7 +92,7 @@ export default function Menu({ items }: MenuProps) {
 			>
 				<ul data-level={0} ref={menuRef} style={{ maxHeight: `calc(100vh - ${menuPadding}px - 1rem)` }}>
 					{items.map((item, idx) =>
-						item.id !== 'search' ? (
+						item.id !== 'sok' ? (
 							<MenuTree key={idx} item={item} level={0} selected={selected} setSelected={setSelected} path={path} />
 						) : (
 							<li key={idx} className={s.search}>
