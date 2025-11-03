@@ -35,8 +35,10 @@ export default function Menu({ items }: MenuProps) {
 
 	const onSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		router.push(`/sok?q=${searchQuery}`, { scroll: true });
 		setSearchFocus(false);
+		setShowMenu(false);
+		setSearchQuery('');
+		router.push(`/sok?q=${searchQuery}`, { scroll: true });
 	};
 
 	useEffect(() => {
