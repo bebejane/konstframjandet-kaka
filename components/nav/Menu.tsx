@@ -40,12 +40,8 @@ export default function Menu({ items }: MenuProps) {
 	};
 
 	useEffect(() => {
-		!isDesktop && setShowMenu(false);
-		setPath(path);
-	}, [isDesktop, pathname]);
-
-	useEffect(() => {
 		const footer = document.getElementById('footer');
+
 		if (!footer || !menuRef.current) return;
 
 		const footerHeight = footer.clientHeight - 1;
@@ -62,7 +58,12 @@ export default function Menu({ items }: MenuProps) {
 
 		setMenuPadding(menuPadding);
 		setFooterScrollPosition(footerScrollPosition);
-	}, [pathname, scrolledPosition, documentHeight, viewportHeight, width, height, isMobile]);
+	}, [path, scrolledPosition, documentHeight, viewportHeight, width, height, isMobile]);
+
+	useEffect(() => {
+		!isDesktop && setShowMenu(false);
+		setPath(path);
+	}, [isDesktop, pathname]);
 
 	useEffect(() => {
 		// Find selected item from pathname recursively
@@ -75,6 +76,7 @@ export default function Menu({ items }: MenuProps) {
 				}
 			}
 		};
+
 		for (let i = 0; i < items.length; i++) {
 			const selected = findSelected(pathname, items[i]);
 			if (selected) {
@@ -93,7 +95,14 @@ export default function Menu({ items }: MenuProps) {
 				<ul data-level={0} ref={menuRef} style={{ maxHeight: `calc(100vh - ${menuPadding}px - 1rem)` }}>
 					{items.map((item, idx) =>
 						item.id !== 'sok' ? (
-							<MenuTree key={idx} item={item} level={0} selected={selected} setSelected={setSelected} path={path} />
+							<MenuTree
+								key={`${idx}-${pathname}`}
+								item={item}
+								level={0}
+								selected={selected}
+								setSelected={setSelected}
+								path={pathname}
+							/>
 						) : (
 							<li key={idx} className={s.search}>
 								<form onSubmit={onSubmitSearch}>
@@ -128,13 +137,12 @@ export type MenuTreeProps = {
 };
 
 export function MenuTree({ item, level, selected, setSelected, path }: MenuTreeProps) {
-	const expand = () => setSelected(item);
-	const locale = 'sv';
+	const expand = () => {
+		setSelected(item);
+		setTimeout(() => window.scrollTo(0, 0), 100);
+	};
 	const itemIncludesPath = (item: MenuItem) => {
-		if (!item) return false;
-		const slugs = [item.slug].map((s) => (s?.startsWith(`/${locale}`) ? s.replace(`/${locale}`, '') : s));
-		const p = path.startsWith(`/${locale}`) ? path.replace(`/${locale}`, '') : path;
-		return slugs.includes(p);
+		return item?.slug === path || item?.sub?.some((sub) => sub.slug === path);
 	};
 
 	const isVisible = (path: string, item: MenuItem) => {
@@ -156,14 +164,14 @@ export function MenuTree({ item, level, selected, setSelected, path }: MenuTreeP
 	return (
 		<li data-parent={item.id} className={cn(isSelected && s.active, isBold && s.bold)}>
 			{isLink && item.slug ? (
-				<Link onClick={expand} href={item.slug}>
+				<Link onClick={expand} href={item.slug} scroll={true}>
 					{label}
 				</Link>
 			) : (
 				<span onClick={expand}>{label}</span>
 			)}
-			{item?.sub && isVisible(path, item) && (
-				<ul data-level={++level} onClick={(e) => e.stopPropagation()}>
+			{item?.sub && isVisible(path, item) && item.sub.length > 0 && (
+				<ul onClick={(e) => e.stopPropagation()}>
 					{item.sub.map((item, idx) => (
 						<MenuTree key={idx} item={item} level={level} selected={selected} setSelected={setSelected} path={path} />
 					))}

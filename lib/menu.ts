@@ -23,20 +23,20 @@ export const sections: Section[] = [
 ];
 
 export const buildMenu = async (): Promise<MenuItem[]> => {
-	const res = await apiQuery(MenuDocument);
+	const res = await apiQuery(MenuDocument, { all: true });
 
 	const menu = sections.map((item) => {
 		let sub: MenuItem[] | null = null;
 
 		switch (item.id) {
-			case 'about':
-				sub = res.abouts.map((el) => ({
+			case 'om':
+				sub = res.allAbouts.map((el) => ({
 					id: `about-${el.slug}`,
 					label: el.title,
 					header: item.header,
 					slug: `/om/${el.slug}`,
 				}));
-				if (res.abouts.length) item.slug = `/om/${res.abouts[0].slug}`;
+				if (res.allAbouts.length) item.slug = `/om/${res.allAbouts[0].slug}`;
 
 				break;
 			default:

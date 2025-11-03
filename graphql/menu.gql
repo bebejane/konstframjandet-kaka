@@ -1,16 +1,10 @@
-query Menu {
-	abouts: allAbouts(first: 100) {
+query Menu($first: IntType = 100, $skip: IntType = 0) {
+	allAbouts(first: $first, skip: $skip) {
 		id
 		title
 		slug
 	}
-	aboutMeta: _allAboutsMeta {
-		count
-	}
-	tipsMeta: _allTipsMeta {
-		count
-	}
-	youthMeta: _allYouthsMeta {
+	_allAboutsMeta {
 		count
 	}
 }

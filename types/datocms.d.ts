@@ -5196,10 +5196,13 @@ type InterviewFragment = { __typename?: 'InterviewRecord', _createdAt: any, id: 
 
 type InterviewFragmentLightFragment = { __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null };
 
-type MenuQueryVariables = Exact<{ [key: string]: never; }>;
+type MenuQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars['IntType']['input']>;
+}>;
 
 
-type MenuQuery = { __typename?: 'Query', abouts: Array<{ __typename?: 'AboutRecord', id: any, title: string, slug: string }>, aboutMeta: { __typename?: 'CollectionMetadata', count: any }, tipsMeta: { __typename?: 'CollectionMetadata', count: any }, youthMeta: { __typename?: 'CollectionMetadata', count: any } };
+type MenuQuery = { __typename?: 'Query', allAbouts: Array<{ __typename?: 'AboutRecord', id: any, title: string, slug: string }>, _allAboutsMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type AllNewsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['IntType']['input']>;

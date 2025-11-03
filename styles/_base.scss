@@ -66,13 +66,14 @@ body {
 	font-family: var(--body-font);
 	-webkit-font-smoothing: antialiased;
 	font-feature-settings: 'liga', 'kern';
-	overflow-x: hidden;
 }
 
 html {
 	box-sizing: border-box;
 }
-
+body {
+	scroll-behavior: smooth;
+}
 html,
 body,
 article {
