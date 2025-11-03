@@ -3,7 +3,7 @@
 import s from './ArticleImage.module.scss';
 import cn from 'classnames';
 import React, { useEffect, useRef } from 'react';
-import { Image, SRCImage } from 'react-datocms';
+import { SRCImage } from 'react-datocms';
 import useStore from '@/lib/store';
 
 export type ArticleImageProps = {

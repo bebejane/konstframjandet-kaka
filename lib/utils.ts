@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { capitalize } from 'next-dato-utils/utils';
-import React from 'react';
 
 export const isServer = typeof window === 'undefined';
 

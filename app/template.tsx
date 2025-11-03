@@ -12,10 +12,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
 	return (
 		<main id='content' className={cn(s.main, !showMenu && s.full, isHome && s.home)}>
-			<article>
-				<SectionHeader />
-				{children}
-			</article>
+			<SectionHeader />
+			<article>{children}</article>
 		</main>
 	);
 }

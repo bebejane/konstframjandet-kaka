@@ -15,7 +15,7 @@ export default async function DatoLink({ link, className, children }: Props) {
 	const t = link.__typename;
 	const slug = t === 'ExternalLinkRecord' ? link.url : t === 'InternalLinkRecord' ? await getInteranlRoute(link) : null;
 	const record = t === 'InternalLinkRecord' && link.record ? link.record : null;
-	const title = t === 'ExternalLinkRecord' ? link.title : record?.title;
+	const title = t === 'ExternalLinkRecord' ? link.title : (record?.title ?? record.name);
 	if (!slug) return <a className={className}>{children}</a>;
 
 	return link.__typename === 'ExternalLinkRecord' ? (

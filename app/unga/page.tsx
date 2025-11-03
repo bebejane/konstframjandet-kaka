@@ -1,6 +1,6 @@
 import s from './page.module.scss';
 import { AllTipsCategoriesDocument, AllTipsDocument } from '@/graphql';
-import { CardContainer, Card, Thumbnail, PageHeader } from '@/components';
+import { CardContainer, Card, Thumbnail } from '@/components';
 import { apiQuery } from 'next-dato-utils/api';
 import { createLoader, parseAsString } from 'nuqs/server';
 import { Metadata } from 'next';
@@ -10,7 +10,7 @@ import FilterBar from '@/components/common/FilterBar';
 const filterSearchParams = { filter: parseAsString };
 const loadSearchParams = createLoader(filterSearchParams);
 
-export default async function Tips({ searchParams }: PageProps<'/tips'>) {
+export default async function YouthPage({ searchParams }: PageProps<'/unga'>) {
 	const { filter } = await loadSearchParams(searchParams);
 	const { allTips } = await apiQuery(AllTipsDocument, { all: true });
 	const { allTipCategories } = await apiQuery(AllTipsCategoriesDocument, { all: true });
@@ -30,7 +30,7 @@ export default async function Tips({ searchParams }: PageProps<'/tips'>) {
 					.filter(({ category }) => !filter || category.find((cat) => cat.slug === filter))
 					.map(({ id, image, intro, name, slug }) => (
 						<Card key={id}>
-							<Thumbnail title={name} titleRows={2} intro={intro} image={image as FileField} slug={`/tips/${slug}`} />
+							<Thumbnail title={name} titleRows={2} intro={intro} image={image as FileField} slug={`/unga/${slug}`} />
 						</Card>
 					))}
 			</CardContainer>
@@ -38,9 +38,9 @@ export default async function Tips({ searchParams }: PageProps<'/tips'>) {
 	);
 }
 
-export async function generateMetadata({ params }: PageProps<'/tips'>): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<'/unga'>): Promise<Metadata> {
 	return await buildMetadata({
-		title: 'Tips',
-		pathname: '/tips',
+		title: 'Unga',
+		pathname: '/unga',
 	});
 }

@@ -1,10 +1,10 @@
 import { AllInterviewsDocument } from '@/graphql';
-import { CardContainer, Card, Thumbnail, PageHeader } from '@/components';
+import { CardContainer, Card, Thumbnail } from '@/components';
 import { apiQuery } from 'next-dato-utils/api';
 import { Metadata } from 'next';
 import { buildMetadata } from '@/app/layout';
 
-export default async function Interviews({ searchParams }: PageProps<'/intervjuer'>) {
+export default async function Interviews({}: PageProps<'/intervjuer'>) {
 	const { allInterviews } = await apiQuery(AllInterviewsDocument, { all: true });
 
 	return (

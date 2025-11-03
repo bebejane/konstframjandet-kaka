@@ -47,12 +47,12 @@ export default function SectionHeader() {
 				<Logo />
 			</Link>
 			<header className={cn(s.header, !showMenu && s.full, isHome && s.home)} key={sectionId} data-datocms-noindex>
-				{section?.slug && <Link href={section?.slug}>{content}</Link>}
+				{section?.slug ? <Link href={section?.slug}>{content}</Link> : content}
 			</header>
 			{!isHome && (
 				<>
-					<div className={s.spacer}></div>
-					<div className={s.line}></div>
+					<div className={s.spacer} />
+					<div className={s.line} />
 				</>
 			)}
 		</>

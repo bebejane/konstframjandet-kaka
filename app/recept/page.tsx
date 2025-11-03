@@ -1,6 +1,6 @@
 import s from './page.module.scss';
 import { AllRecipeCategoriesDocument, AllRecipesDocument } from '@/graphql';
-import { CardContainer, Card, Thumbnail, PageHeader } from '@/components';
+import { CardContainer, Card, Thumbnail } from '@/components';
 import { apiQuery } from 'next-dato-utils/api';
 import { createLoader, parseAsString } from 'nuqs/server';
 import { Metadata } from 'next';

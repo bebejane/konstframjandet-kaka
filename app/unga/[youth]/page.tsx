@@ -6,7 +6,7 @@ import { DraftMode } from 'next-dato-utils/components';
 import { buildMetadata } from '@/app/layout';
 import { Metadata } from 'next';
 
-export default async function YouthItemPAge({ params }: PageProps<'/unga/[youth]'>) {
+export default async function YouthItemPage({ params }: PageProps<'/unga/[youth]'>) {
 	const { youth: slug } = await params;
 	const { youth, draftUrl } = await apiQuery(YouthDocument, { variables: { slug } });
 

@@ -1,5 +1,5 @@
 import { ContactDocument } from '@/graphql';
-import { Article, PageHeader } from '@/components';
+import { Article } from '@/components';
 import { apiQuery } from 'next-dato-utils/api';
 import { notFound } from 'next/navigation';
 import { DraftMode } from 'next-dato-utils/components';

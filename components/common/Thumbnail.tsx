@@ -1,6 +1,6 @@
 import s from './Thumbnail.module.scss';
 import cn from 'classnames';
-import { Image } from 'react-datocms/image';
+import { Image } from 'react-datocms';
 import Link from 'next/link';
 import { truncateWords } from '@/lib/utils';
 import { remark } from 'remark';
@@ -23,10 +23,8 @@ export default function Thumbnail({ image, slug, intro, title, titleLength, titl
 		<Link href={slug} className={s.thumbnail}>
 			{image?.responsiveImage && (
 				<div className={s.imageWrap}>
-					<>
-						<Image data={image.responsiveImage} pictureClassName={s.image} placeholderClassName={s.placeholder} />
-						<div className={s.border}></div>
-					</>
+					<Image data={image.responsiveImage} pictureClassName={s.image} placeholderClassName={s.placeholder} />
+					<div className={s.border} />
 				</div>
 			)}
 			<h3 className={cn(s[`rows-${titleRows}`])}>

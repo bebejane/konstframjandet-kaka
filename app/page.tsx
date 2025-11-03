@@ -1,5 +1,4 @@
 import s from './page.module.scss';
-import cn from 'classnames';
 import { StartDocument } from '@/graphql';
 import { apiQuery } from 'next-dato-utils/api';
 import { Block } from '@/components';
