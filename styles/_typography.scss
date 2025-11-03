@@ -170,9 +170,9 @@ article {
 	}
 
 	ul {
-		margin-left: var(--outer-margin);
 		margin-right: var(--outer-margin);
 		text-align: left;
+
 		@include mq($from: tablet) {
 			margin-left: calc(2 * var(--grid-unit));
 			margin-right: calc(2 * var(--grid-unit));

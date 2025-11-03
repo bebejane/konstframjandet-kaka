@@ -9,16 +9,13 @@ export type Props = {
 	start: StartRecord;
 };
 
-const fullBlocks = ['StartFullscreenImageRecord', 'StartFullBleedImageRecord', 'StartFullscreenVideoRecord'];
-
 export default async function Home() {
 	const { start, draftUrl } = await apiQuery(StartDocument);
-	console.log(start?.content);
 	return (
 		<>
 			<div className={s.container}>
 				{start?.content.map((block, idx) => (
-					<section key={idx} className={cn(fullBlocks.includes(block.__typename) && s.noborder)}>
+					<section key={idx} className={s.noborder}>
 						<Block data={block} />
 					</section>
 				))}

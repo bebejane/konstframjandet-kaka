@@ -1,2 +1,2 @@
 search
-logo positioning
+.name > .title Tips

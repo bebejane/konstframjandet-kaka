@@ -1,6 +1,5 @@
 query SiteSearch(
 	$aboutIds: [ItemId]
-	$newsIds: [ItemId]
 	$recipeIds: [ItemId]
 	$interviewIds: [ItemId]
 	$youthIds: [ItemId]
@@ -8,32 +7,14 @@ query SiteSearch(
 	$first: IntType = 100
 	$skip: IntType = 0
 ) {
-	allAbouts(
-		first: $first
-		skip: $skip
-
-		filter: { id: { in: $aboutIds } }
-	) {
+	allAbouts(first: $first, skip: $skip, filter: { id: { in: $aboutIds } }) {
 		__typename
 		_modelApiKey
 		title
 		text: intro(markdown: false)
 		slug
 	}
-	allNews(first: $first, skip: $skip, filter: { id: { in: $newsIds } }) {
-		__typename
-		_modelApiKey
-		title
-		text: intro(markdown: false)
-		slug
-	}
-
-	allRecipes(
-		first: $first
-		skip: $skip
-
-		filter: { id: { in: $recipeIds } }
-	) {
+	allRecipes(first: $first, skip: $skip, filter: { id: { in: $recipeIds } }) {
 		__typename
 		_modelApiKey
 		title
@@ -59,12 +40,7 @@ query SiteSearch(
 		text: intro(markdown: false)
 		slug
 	}
-	allTips(
-		first: $first
-		skip: $skip
-
-		filter: { id: { in: $tipIds } }
-	) {
+	allTips(first: $first, skip: $skip, filter: { id: { in: $tipIds } }) {
 		__typename
 		_modelApiKey
 		title: name

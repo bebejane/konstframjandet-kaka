@@ -2707,14 +2707,6 @@ type InverseRelationshipFieldFilterBetweenInternalLinkAndTip = {
   notIn?: InputMaybe<Array<InternalLinkModelFieldsReferencingTipModel>>;
 };
 
-/** Specifies how to filter by linking fields */
-type InverseRelationshipFieldFilterBetweenStartAndRecipe = {
-  /** Filter linking records that reference current record in at least one of the specified fields */
-  anyIn?: InputMaybe<Array<StartModelFieldsReferencingRecipeModel>>;
-  /** Filter linking records that do not reference current record in any of the specified fields */
-  notIn?: InputMaybe<Array<StartModelFieldsReferencingRecipeModel>>;
-};
-
 /** Specifies how to filter linking records */
 type InverseRelationshipFilterBetweenInternalLinkAndInterview = {
   /** Specifies how to filter by linking fields */
@@ -2735,14 +2727,6 @@ type InverseRelationshipFilterBetweenInternalLinkAndRecipe = {
 type InverseRelationshipFilterBetweenInternalLinkAndTip = {
   /** Specifies how to filter by linking fields */
   fields?: InputMaybe<InverseRelationshipFieldFilterBetweenInternalLinkAndTip>;
-  /** Specifies how to filter by linking locales */
-  locales?: InputMaybe<LinkingLocalesFilter>;
-};
-
-/** Specifies how to filter linking records */
-type InverseRelationshipFilterBetweenStartAndRecipe = {
-  /** Specifies how to filter by linking fields */
-  fields?: InputMaybe<InverseRelationshipFieldFilterBetweenStartAndRecipe>;
   /** Specifies how to filter by linking locales */
   locales?: InputMaybe<LinkingLocalesFilter>;
 };
@@ -3587,9 +3571,6 @@ type RecipeRecord = RecordInterface & {
   _allReferencingInternalLinks: Array<InternalLinkRecord>;
   /** Returns meta information regarding a record collection */
   _allReferencingInternalLinksMeta: CollectionMetadata;
-  _allReferencingStarts: Array<StartRecord>;
-  /** Returns meta information regarding a record collection */
-  _allReferencingStartsMeta: CollectionMetadata;
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3630,26 +3611,6 @@ type RecipeRecord_allReferencingInternalLinksMetaArgs = {
   filter?: InputMaybe<InternalLinkModelFilter>;
   locale?: InputMaybe<SiteLocale>;
   through?: InputMaybe<InverseRelationshipFilterBetweenInternalLinkAndRecipe>;
-};
-
-
-/** Record of type Recept (recipe) */
-type RecipeRecord_allReferencingStartsArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
-  filter?: InputMaybe<StartModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
-  locale?: InputMaybe<SiteLocale>;
-  orderBy?: InputMaybe<Array<InputMaybe<StartModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
-  through?: InputMaybe<InverseRelationshipFilterBetweenStartAndRecipe>;
-};
-
-
-/** Record of type Recept (recipe) */
-type RecipeRecord_allReferencingStartsMetaArgs = {
-  filter?: InputMaybe<StartModelFilter>;
-  locale?: InputMaybe<SiteLocale>;
-  through?: InputMaybe<InverseRelationshipFilterBetweenStartAndRecipe>;
 };
 
 
@@ -3926,48 +3887,7 @@ type StartGalleryRecord_seoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-type StartModelContentField = StartExhibitionRecord | StartFullBleedImageRecord | StartFullscreenImageRecord | StartFullscreenVideoRecord | StartGalleryRecord | StartNewsRecord | StartProgramRecord | StartRandomParticipantRecord | StartSelectedLocationRecord | StartTextRecord | StartVideoRecord;
-
-/** Linking fields */
-enum StartModelFieldsReferencingRecipeModel {
-  start_content = 'start_content',
-  start_content__startSelectedLocation_locations = 'start_content__startSelectedLocation_locations'
-}
-
-type StartModelFilter = {
-  AND?: InputMaybe<Array<InputMaybe<StartModelFilter>>>;
-  OR?: InputMaybe<Array<InputMaybe<StartModelFilter>>>;
-  _createdAt?: InputMaybe<CreatedAtFilter>;
-  _firstPublishedAt?: InputMaybe<PublishedAtFilter>;
-  _isValid?: InputMaybe<BooleanFilter>;
-  _publicationScheduledAt?: InputMaybe<PublishedAtFilter>;
-  _publishedAt?: InputMaybe<PublishedAtFilter>;
-  _status?: InputMaybe<StatusFilter>;
-  _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
-  _updatedAt?: InputMaybe<UpdatedAtFilter>;
-  id?: InputMaybe<ItemIdFilter>;
-};
-
-enum StartModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC'
-}
+type StartModelContentField = StartFullBleedImageRecord | StartFullscreenImageRecord | StartFullscreenVideoRecord;
 
 /** Block of type Senaste nyheter (start_news) */
 type StartNewsRecord = RecordInterface & {
@@ -5383,7 +5303,6 @@ type RecipeFragmentLightFragment = { __typename: 'RecipeRecord', _modelApiKey: s
 
 type SiteSearchQueryVariables = Exact<{
   aboutIds?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
-  newsIds?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
   recipeIds?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
   interviewIds?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
   youthIds?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
@@ -5393,7 +5312,7 @@ type SiteSearchQueryVariables = Exact<{
 }>;
 
 
-type SiteSearchQuery = { __typename?: 'Query', allAbouts: Array<{ __typename: 'AboutRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allNews: Array<{ __typename: 'NewsRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allRecipes: Array<{ __typename: 'RecipeRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allInterviews: Array<{ __typename: 'InterviewRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allYouths: Array<{ __typename: 'YouthRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allTips: Array<{ __typename: 'TipRecord', _modelApiKey: string, slug: string, title: string, text: string }> };
+type SiteSearchQuery = { __typename?: 'Query', allAbouts: Array<{ __typename: 'AboutRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allRecipes: Array<{ __typename: 'RecipeRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allInterviews: Array<{ __typename: 'InterviewRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allYouths: Array<{ __typename: 'YouthRecord', _modelApiKey: string, title: string, slug: string, text: string }>, allTips: Array<{ __typename: 'TipRecord', _modelApiKey: string, slug: string, title: string, text: string }> };
 
 type SitemapQueryVariables = Exact<{
   first?: InputMaybe<Scalars['IntType']['input']>;
@@ -5407,7 +5326,6 @@ type StartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type StartQuery = { __typename?: 'Query', start?: { __typename?: 'StartRecord', id: any, content: Array<
-      | { __typename: 'StartExhibitionRecord', id: any, amount: string }
       | { __typename: 'StartFullBleedImageRecord', id: any, headline: string, text: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }, link:
           | { __typename: 'ExternalLinkRecord', id: any, title: string, url: string }
           | { __typename: 'InternalLinkRecord', id: any, record:
@@ -5438,31 +5356,6 @@ type StartQuery = { __typename?: 'Query', start?: { __typename?: 'StartRecord', 
               | { __typename?: 'TipRecord' }
              }
          }
-      | { __typename: 'StartGalleryRecord', id: any, headline: string, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, link:
-          | { __typename: 'ExternalLinkRecord', id: any, title: string, url: string }
-          | { __typename: 'InternalLinkRecord', id: any, record:
-              | { __typename?: 'AboutRecord', id: any, slug: string, title: string }
-              | { __typename?: 'InterviewRecord' }
-              | { __typename?: 'NewsRecord', id: any, slug: string, title: string }
-              | { __typename?: 'RecipeRecord' }
-              | { __typename?: 'TipRecord' }
-             }
-         }
-      | { __typename: 'StartNewsRecord', id: any, amount: string }
-      | { __typename: 'StartProgramRecord', id: any, amount: string }
-      | { __typename: 'StartRandomParticipantRecord', id: any, amount: string }
-      | { __typename: 'StartSelectedLocationRecord' }
-      | { __typename: 'StartTextRecord', id: any, headline: string, text: string, link:
-          | { __typename: 'ExternalLinkRecord', id: any, title: string, url: string }
-          | { __typename: 'InternalLinkRecord', id: any, internalTitle?: string | null, record:
-              | { __typename?: 'AboutRecord', id: any, slug: string, title: string }
-              | { __typename?: 'InterviewRecord' }
-              | { __typename?: 'NewsRecord' }
-              | { __typename?: 'RecipeRecord' }
-              | { __typename?: 'TipRecord' }
-             }
-         }
-      | { __typename: 'StartVideoRecord', id: any, title: string, video: { __typename?: 'VideoField', provider: string, providerUid: string, thumbnailUrl: string, url: string } }
     > } | null };
 
 type StartDataQueryVariables = Exact<{

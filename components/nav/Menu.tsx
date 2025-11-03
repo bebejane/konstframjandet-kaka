@@ -33,7 +33,7 @@ export default function Menu({ items }: MenuProps) {
 	const { isDesktop, isMobile } = useDevice();
 
 	const onSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
-		//e.preventDefault();
+		e.preventDefault();
 		//router.push(`/sok?q=${searchQuery}`, undefined, { shallow: true, scroll: true });
 		//setSearchFocus(false);
 	};
@@ -46,6 +46,7 @@ export default function Menu({ items }: MenuProps) {
 	useEffect(() => {
 		const footer = document.getElementById('footer');
 		if (!footer || !menuRef.current) return;
+
 		const footerHeight = footer.clientHeight - 1;
 		const menuOffset = menuRef.current.offsetTop;
 		const footerScrollPosition =
@@ -60,7 +61,7 @@ export default function Menu({ items }: MenuProps) {
 
 		setMenuPadding(menuPadding);
 		setFooterScrollPosition(footerScrollPosition);
-	}, [menuRef, selected, scrolledPosition, documentHeight, viewportHeight, width, height, isMobile]);
+	}, [pathname, scrolledPosition, documentHeight, viewportHeight, width, height, isMobile]);
 
 	useEffect(() => {
 		// Find selected item from pathname recursively

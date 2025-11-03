@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { MenuItem, Section, sections } from '@/lib/menu';
 import useStore from '@/lib/store';
 import { usePathname } from 'next/navigation';
-import { Logo } from './Logo';
+import Logo from '@/public/images/logo-text.svg';
 
 export type SectionHeaderProps = {
 	menu: MenuItem[];

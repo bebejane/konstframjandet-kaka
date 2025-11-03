@@ -43,7 +43,7 @@ export async function buildMetadata({
 		site: { globalSeo, faviconMetaTags },
 	} = await apiQuery(GlobalDocument);
 
-	const siteName = 'Verdde';
+	const siteName = 'KakaKonstpedagogik';
 	const url = pathname ? `${process.env.NEXT_PUBLIC_SITE_URL}${pathname}` : process.env.NEXT_PUBLIC_SITE_URL;
 	const title = t ? `${siteName} — ${t}` : siteName;
 	const description = !desc ? (globalSeo?.fallbackSeo?.description ?? '') : desc;

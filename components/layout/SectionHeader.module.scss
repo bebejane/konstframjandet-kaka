@@ -6,6 +6,7 @@
 	z-index: var(--z-section-header);
 	transition: width 0.3s ease-in-out;
 	width: 100%;
+	margin-top: 2.5rem;
 
 	h2 {
 		@include mq($until: tablet) {
@@ -32,8 +33,6 @@
 		}
 	}
 
-	margin-top: 2.5rem;
-
 	@include mq($until: tablet) {
 		margin-top: -1.5em;
 	}
@@ -44,21 +43,9 @@
 
 	&.home {
 		margin-top: 0;
-
-		&.home {
-			svg,
-			g,
-			path {
-				@include mq($from: tablet) {
-					fill: var(--white);
-				}
-			}
-		}
 	}
 
 	a {
-		//width: 100%;
-
 		h2 {
 			line-height: 1;
 			text-align: center;
@@ -102,8 +89,12 @@
 	}
 
 	&.home {
-		img {
-			filter: invert(1);
+		svg,
+		g,
+		path {
+			@include mq($from: tablet) {
+				fill: var(--white) !important;
+			}
 		}
 	}
 }
