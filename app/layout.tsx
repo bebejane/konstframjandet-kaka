@@ -43,9 +43,9 @@ export async function buildMetadata({
 		site: { globalSeo, faviconMetaTags },
 	} = await apiQuery(GlobalDocument);
 
-	const siteName = 'KakaKonstpedagogik';
+	const siteName = 'Kaka: Konstpedagogiska akedemin';
 	const url = pathname ? `${process.env.NEXT_PUBLIC_SITE_URL}${pathname}` : process.env.NEXT_PUBLIC_SITE_URL;
-	const title = t ? `${siteName} — ${t}` : siteName;
+	const title = t ? `${siteName}: ${t}` : siteName;
 	const description = !desc ? (globalSeo?.fallbackSeo?.description ?? '') : desc;
 	const image = img ?? (globalSeo?.fallbackSeo?.image as FileField);
 
@@ -71,25 +71,25 @@ export async function buildMetadata({
 			url,
 			images: image
 				? [
-						{
-							url: `${image?.url}?w=1200&h=630&fit=fill&q=80`,
-							width: 800,
-							height: 600,
-							alt: title,
-						},
-						{
-							url: `${image?.url}?w=1600&h=800&fit=fill&q=80`,
-							width: 1600,
-							height: 800,
-							alt: title,
-						},
-						{
-							url: `${image?.url}?w=790&h=627&fit=crop&q=80`,
-							width: 790,
-							height: 627,
-							alt: title,
-						},
-					]
+					{
+						url: `${image?.url}?w=1200&h=630&fit=fill&q=80`,
+						width: 800,
+						height: 600,
+						alt: title,
+					},
+					{
+						url: `${image?.url}?w=1600&h=800&fit=fill&q=80`,
+						width: 1600,
+						height: 800,
+						alt: title,
+					},
+					{
+						url: `${image?.url}?w=790&h=627&fit=crop&q=80`,
+						width: 790,
+						height: 627,
+						alt: title,
+					},
+				]
 				: undefined,
 			locale: 'sv_SE',
 			type: 'website',
