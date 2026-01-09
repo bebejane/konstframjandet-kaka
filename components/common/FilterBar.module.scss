@@ -54,7 +54,7 @@
 			transform: translateX(0.4em);
 
 			@include mq($from: tablet) {
-				padding-right: 0.4em;
+				padding-right: 1em;
 			}
 			.arrow {
 				display: inline;

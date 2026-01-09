@@ -2518,6 +2518,7 @@ type InterviewCategoryModelFilter = {
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
   _updatedAt?: InputMaybe<UpdatedAtFilter>;
   id?: InputMaybe<ItemIdFilter>;
+  slug?: InputMaybe<SlugFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -2561,6 +2562,7 @@ type InterviewCategoryRecord = RecordInterface & {
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
+  slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4469,6 +4471,7 @@ type UploadFilter = {
   mimeType?: InputMaybe<UploadMimeTypeFilter>;
   notes?: InputMaybe<UploadNotesFilter>;
   orientation?: InputMaybe<OrientationFilter>;
+  path?: InputMaybe<UploadPathFilter>;
   resolution?: InputMaybe<ResolutionFilter>;
   size?: InputMaybe<UploadSizeFilter>;
   smartTags?: InputMaybe<UploadTagsFilter>;
@@ -4582,6 +4585,18 @@ enum UploadOrientation {
   portrait = 'portrait',
   square = 'square'
 }
+
+/** Specifies how to filter by path */
+type UploadPathFilter = {
+  /** Search the asset with the specified path */
+  eq?: InputMaybe<Scalars['String']['input']>;
+  /** Search assets with the specified paths */
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Exclude the asset with the specified path */
+  neq?: InputMaybe<Scalars['String']['input']>;
+  /** Search assets that do not have the specified paths */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
 
 /** Specifies how to filter by size */
 type UploadSizeFilter = {
@@ -5147,14 +5162,14 @@ type AllInterviewsQueryVariables = Exact<{
 }>;
 
 
-type AllInterviewsQuery = { __typename?: 'Query', allInterviews: Array<{ __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }>, _allInterviewsMeta: { __typename?: 'CollectionMetadata', count: any } };
+type AllInterviewsQuery = { __typename?: 'Query', allInterviews: Array<{ __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null, slug?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }>, _allInterviewsMeta: { __typename?: 'CollectionMetadata', count: any } };
 
 type InterviewQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-type InterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'InterviewRecord', _createdAt: any, id: any, intro: string, title: string, slug: string, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null, content?: { __typename?: 'InterviewModelContentField', value: any, blocks: Array<
+type InterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'InterviewRecord', _createdAt: any, id: any, intro: string, title: string, slug: string, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null, slug?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null, content?: { __typename?: 'InterviewModelContentField', value: any, blocks: Array<
         | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
         | { __typename: 'ImageRecord', id: any, layout: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }
         | { __typename: 'LinkButtonRecord', id: any, link:
@@ -5176,9 +5191,9 @@ type AllInterviewsCategoriesQueryVariables = Exact<{
 }>;
 
 
-type AllInterviewsCategoriesQuery = { __typename?: 'Query', allInterviewCategories: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, _allInterviewsMeta: { __typename?: 'CollectionMetadata', count: any } };
+type AllInterviewsCategoriesQuery = { __typename?: 'Query', allInterviewCategories: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null, slug?: string | null }>, _allInterviewCategoriesMeta: { __typename?: 'CollectionMetadata', count: any } };
 
-type InterviewFragment = { __typename?: 'InterviewRecord', _createdAt: any, id: any, intro: string, title: string, slug: string, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null, content?: { __typename?: 'InterviewModelContentField', value: any, blocks: Array<
+type InterviewFragment = { __typename?: 'InterviewRecord', _createdAt: any, id: any, intro: string, title: string, slug: string, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null, slug?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null, content?: { __typename?: 'InterviewModelContentField', value: any, blocks: Array<
       | { __typename: 'ImageGalleryRecord', id: any, images: Array<{ __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }> }
       | { __typename: 'ImageRecord', id: any, layout: string, image: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } }
       | { __typename: 'LinkButtonRecord', id: any, link:
@@ -5194,7 +5209,7 @@ type InterviewFragment = { __typename?: 'InterviewRecord', _createdAt: any, id: 
       | { __typename: 'VideoRecord', id: any, title: string, video: { __typename?: 'VideoField', height: any, width: any, title: string, provider: string, providerUid: string, thumbnailUrl: string, url: string } }
     > } | null, _seoMetaTags: Array<{ __typename?: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
-type InterviewFragmentLightFragment = { __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null };
+type InterviewFragmentLightFragment = { __typename?: 'InterviewRecord', id: any, intro: string, title: string, slug: string, _createdAt: any, category: Array<{ __typename?: 'InterviewCategoryRecord', id: any, title?: string | null, slug?: string | null }>, image?: { __typename?: 'FileField', id: any, mimeType: string, url: string, title?: string | null, alt?: string | null, height?: any | null, width?: any | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null };
 
 type MenuQueryVariables = Exact<{
   first?: InputMaybe<Scalars['IntType']['input']>;
