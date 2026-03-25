@@ -15,16 +15,12 @@ const nextConfig: NextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
-	eslint: {
-		ignoreDuringBuilds: true,
-	},
 	webpack: (config, options) => {
 		config.module.exprContextCritical = false;
 		config.resolve.alias['datocms.config'] = path.join(__dirname, 'datocms.config.ts');
 		return config;
 	},
 	turbopack: {
-		//root: path.join(__dirname, '..'),
 		resolveAlias: {
 			'datocms.config': './datocms.config.ts',
 		},
@@ -35,11 +31,8 @@ const nextConfig: NextConfig = {
 			},
 		},
 	},
-	logging: {
-		fetches: {
-			fullUrl: true,
-		},
-	},
+	logging: false,
+	devIndicators: false,
 	async headers() {
 		return [
 			{
